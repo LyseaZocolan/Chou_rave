@@ -62,13 +62,24 @@ public class fenetregrapique extends JFrame implements ActionListener, KeyListen
     // --- Gestion du Clavier (Z, Q, S, D) ---
     @Override
     public void keyPressed(KeyEvent evt) {
-        if (evt.getKeyCode() == KeyEvent.VK_D) { this.jeu.getAvatar().setToucheDroite(true); }
-        if (evt.getKeyCode() == KeyEvent.VK_Q) { this.jeu.getAvatar().setToucheGauche(true); }
-        if (evt.getKeyCode() == KeyEvent.VK_Z) { this.jeu.getAvatar().setToucheHaut(true); }
-        if (evt.getKeyCode() == KeyEvent.VK_S) { this.jeu.getAvatar().setToucheBas(true); }
-        
-        if (evt.getKeyCode() == KeyEvent.VK_E) { this.jeu.getAvatar().ramasserNourriture("Carotte"); }
-        if (evt.getKeyCode() == KeyEvent.VK_R) { this.jeu.getAvatar().deposerNourritureTerrier(); }
+        if (evt.getKeyCode() == KeyEvent.VK_D) { 
+            this.jeu.getAvatar().setToucheDroite(true);
+        }
+        if (evt.getKeyCode() == KeyEvent.VK_Q) { 
+            this.jeu.getAvatar().setToucheGauche(true); 
+        }
+        if (evt.getKeyCode() == KeyEvent.VK_Z) { 
+            this.jeu.getAvatar().setToucheHaut(true); 
+        }
+        if (evt.getKeyCode() == KeyEvent.VK_S) {
+            this.jeu.getAvatar().setToucheBas(true); 
+        }
+        if (evt.getKeyCode() == KeyEvent.VK_E) { 
+            this.jeu.getAvatar().ramasserNourriture("Carotte"); 
+        }
+        if (evt.getKeyCode() == KeyEvent.VK_R) { 
+            this.jeu.essayerDeposerNourriture(); 
+        }
     }
 
     @Override
