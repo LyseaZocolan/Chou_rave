@@ -38,7 +38,7 @@ import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 
 /**
- * Écran d'accueil du jeu "De la Terre à l'Assiette"
+ * Écran d'accueil du jeu "Chou-rave"
  */
 public class EcranAccueil extends JFrame implements ActionListener { 
 
@@ -50,12 +50,12 @@ public class EcranAccueil extends JFrame implements ActionListener {
     public EcranAccueil() {
         // 1. Configuration de la fenêtre principale (JFrame)
         setTitle("De la Terre à l'Assiette - Accueil");
-        setSize(600, 500); // Fenêtre légèrement agrandie pour bien voir le fond
+        setSize(600, 500); // Fenêtre légèrement agrandie
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setResizable(false);
 
-        // 2. Panneau principal avec votre image de fond absolue[cite: 50]
+        // 2. Panneau principal avec votre image de fond absolue
         PanneauFond mainPanel = new PanneauFond("Z:\\Desktop\\Info_Projet\\Chou_rave\\Image Interface\\Fond Interface Graphique.jpg");
         mainPanel.setLayout(new BorderLayout(10, 10));
         mainPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
@@ -187,11 +187,11 @@ public class EcranAccueil extends JFrame implements ActionListener {
 
             String animal = getAnimalSelectionne();
 
-            JOptionPane.showMessageDialog(this,
-                    "Bienvenue " + pseudo + " !\nVous avez choisi : " + animal + ".\nLancement de la partie...",
-                    "Partie lancée", JOptionPane.INFORMATION_MESSAGE); 
+            // On ne met plus de JOptionPane ici, on passe directement à la salle d'attente
+            SalleAttente attente = new SalleAttente(pseudo, animal); 
+            attente.setVisible(true); // Affiche la salle d'attente
 
-            this.dispose(); 
+            this.dispose(); // Ferme l'écran d'accueil
 
         } else if (e.getSource() == btnQuitter) {
             System.exit(0);
@@ -213,7 +213,7 @@ class PanneauFond extends JPanel {
 
     public PanneauFond(String cheminAbsoluImage) {
         try {
-            // Utilisation de java.io.File pour aller chercher l'image sur le Bureau[cite: 50]
+            // Utilisation de java.io.File pour aller chercher l'image sur le Bureau
             File fichierImage = new File(cheminAbsoluImage);
             if(fichierImage.exists()) {
                 imageFond = ImageIO.read(fichierImage); 
