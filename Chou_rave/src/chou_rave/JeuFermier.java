@@ -24,17 +24,13 @@ public class JeuFermier {
         this.imageFermier = new ImageIcon(nomFichierImage).getImage();
     }
     
-    // --- FONCTION QUI DÉFINIT LES OBSTACLES DE LA MAP ---
+    //FONCTION QUI DÉFINIT LES OBSTACLES DE LA MAP
     private boolean estUnObstacle(int x, int y) {
         // 1. Si on sort du cadre de la carte (0 à 11)
         if (x < 0 || x > 11 || y < 0 || y > 11) {
             return true;
         }
         
-//        // 2. Le Bois (en haut à gauche)
-//        if (x <= 3 && y <= 4) {
-//            return true;
-//        }
         
         // 3. La Ferme / Bâtiments / Enclos du haut (en haut à droite)
         if (x >= 4 && x <= 11 && y <= 2) {
@@ -51,7 +47,7 @@ public class JeuFermier {
             return true;
         }
         
-        // Sinon, la case est libre !
+        // Sinon, la case est libre
         return false;
     }
 
@@ -63,7 +59,7 @@ public class JeuFermier {
         mouvementsPossibles.add(new JeuCoordonnees(position.getX(), position.getY() + 1)); // Bas
         mouvementsPossibles.add(new JeuCoordonnees(position.getX(), position.getY() - 1)); // Haut
         
-        // 2. On ne garde QUE les mouvements qui ne sont PAS des obstacles
+        // 2. On ne garde que les mouvements qui ne sont pas des obstacles
         List<JeuCoordonnees> mouvementsValides = new ArrayList<>();
         for (JeuCoordonnees coord : mouvementsPossibles) {
             if (!estUnObstacle(coord.getX(), coord.getY())) {

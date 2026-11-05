@@ -5,7 +5,7 @@
 package moteur;
 
 import java.util.Scanner;
-
+import chou_rave.Avatar;
 /**
  *
  * @author jbelot
