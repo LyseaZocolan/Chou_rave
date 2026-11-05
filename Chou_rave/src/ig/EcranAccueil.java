@@ -9,18 +9,24 @@ package ig;
  * @author ntessier
  */
 
+
+
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -32,60 +38,54 @@ import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 
 /**
- * Écran d'accueil du jeu "Chou-rave"
- * Réalisé par le Product Owner
+ * Écran d'accueil du jeu "De la Terre à l'Assiette"
  */
-public class EcranAccueil extends JFrame implements ActionListener {
+public class EcranAccueil extends JFrame implements ActionListener { 
 
-    // Composants de l'interface
     private JTextField txtPseudo;
-    private JRadioButton rbSanglier;
-    private JRadioButton rbRenard;
-    private JRadioButton rbTaupe;
-    private JRadioButton rbLapin;
+    private JRadioButton rbSanglier, rbPoule, rbVache, rbLapin;
     private ButtonGroup groupeAnimaux;
-    private JButton btnJouer;
-    private JButton btnQuitter;
+    private JButton btnJouer, btnQuitter;
 
     public EcranAccueil() {
-        // Configuration de la fenêtre principale (JFrame)
-        setTitle("Chou-rave - Accueil");
-        setSize(500, 450);
+        // 1. Configuration de la fenêtre principale (JFrame)
+        setTitle("De la Terre à l'Assiette - Accueil");
+        setSize(600, 500); // Fenêtre légèrement agrandie pour bien voir le fond
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null); // Centrer à l'écran
+        setLocationRelativeTo(null);
         setResizable(false);
 
-        // Panneau principal avec BorderLayout
-        JPanel mainPanel = new JPanel(new BorderLayout(10, 10));
-        mainPanel.setBackground(new Color(235, 245, 235)); // Fond vert très clair
+        // 2. Panneau principal avec votre image de fond absolue[cite: 50]
+        PanneauFond mainPanel = new PanneauFond("Z:\\Desktop\\Info_Projet\\Chou_rave\\Image Interface\\Fond Interface Graphique.jpg");
+        mainPanel.setLayout(new BorderLayout(10, 10));
         mainPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-        // 1. Titre
-        JLabel lblTitre = new JLabel("Chou-rave", SwingConstants.CENTER);
-        lblTitre.setFont(new Font("Arial", Font.BOLD, 26));
-        lblTitre.setForeground(new Color(34, 112, 34));
+        // 3. En-tête (Titres)
+        JLabel lblTitre = new JLabel("De la Terre à l'Assiette", SwingConstants.CENTER);
+        lblTitre.setFont(new Font("Arial", Font.BOLD, 30));
+        lblTitre.setForeground(new Color(255, 255, 255)); // Mis en blanc pour ressortir sur l'image
         
         JLabel lblSousTitre = new JLabel("Vole la nourriture au fermier !", SwingConstants.CENTER);
-        lblSousTitre.setFont(new Font("Arial", Font.ITALIC, 14));
+        lblSousTitre.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 18));
+        lblSousTitre.setForeground(new Color(255, 255, 255)); // Mis en blanc
         
         JPanel headerPanel = new JPanel(new BorderLayout());
-        headerPanel.setOpaque(false);
+        headerPanel.setOpaque(false); // Rend le panneau transparent pour voir le fond
         headerPanel.add(lblTitre, BorderLayout.NORTH);
         headerPanel.add(lblSousTitre, BorderLayout.SOUTH);
         mainPanel.add(headerPanel, BorderLayout.NORTH);
 
-        // 2. Formulaire central (Pseudo + Choix de l'animal)
+        // 4. Formulaire central (Pseudo + Animaux)
         JPanel formPanel = new JPanel(new GridBagLayout());
         formPanel.setOpaque(false);
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(8, 8, 8, 8);
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        // Champ Pseudo
-        gbc.gridx = 0;
-        gbc.gridy = 0;
+        gbc.gridx = 0; gbc.gridy = 0;
         JLabel lblPseudo = new JLabel("Pseudo du joueur :");
-        lblPseudo.setFont(new Font("Arial", Font.BOLD, 14));
+        lblPseudo.setFont(new Font("Arial", Font.BOLD, 16));
+        lblPseudo.setForeground(Color.WHITE); // Texte en blanc
         formPanel.add(lblPseudo, gbc);
 
         gbc.gridx = 1;
@@ -93,21 +93,18 @@ public class EcranAccueil extends JFrame implements ActionListener {
         txtPseudo.setFont(new Font("Arial", Font.PLAIN, 14));
         formPanel.add(txtPseudo, gbc);
 
-        // Sélection de l'animal
-        gbc.gridx = 0;
-        gbc.gridy = 1;
+        gbc.gridx = 0; gbc.gridy = 1;
         JLabel lblAnimal = new JLabel("Choisissez votre animal :");
-        lblAnimal.setFont(new Font("Arial", Font.BOLD, 14));
+        lblAnimal.setFont(new Font("Arial", Font.BOLD, 16));
+        lblAnimal.setForeground(Color.WHITE); // Texte en blanc
         formPanel.add(lblAnimal, gbc);
 
-        // Boutons radio pour les 4 animaux
-        rbSanglier = new JRadioButton("Sanglier", true); // Sélectionné par défaut
-        rbRenard = new JRadioButton("Renard");
-        rbTaupe = new JRadioButton("Taupe");
+        rbSanglier = new JRadioButton("Sanglier", true);
+        rbPoule = new JRadioButton("Poule");
+        rbVache = new JRadioButton("Vache");
         rbLapin = new JRadioButton("Lapin");
 
-        // Style des radio buttons
-        JRadioButton[] animaux = {rbSanglier, rbRenard, rbTaupe, rbLapin};
+        JRadioButton[] animaux = {rbSanglier, rbPoule, rbVache, rbLapin};
         groupeAnimaux = new ButtonGroup();
 
         JPanel radioPanel = new JPanel(new GridBagLayout());
@@ -118,58 +115,64 @@ public class EcranAccueil extends JFrame implements ActionListener {
 
         int row = 0;
         for (JRadioButton rb : animaux) {
-            rb.setFont(new Font("Arial", Font.PLAIN, 13));
-            rb.setOpaque(false);
+            rb.setFont(new Font("Arial", Font.BOLD, 14));
+            rb.setForeground(Color.WHITE); // Boutons radio en blanc
+            rb.setOpaque(false); // Transparent
             groupeAnimaux.add(rb);
             gbcRadio.gridy = row++;
             radioPanel.add(rb, gbcRadio);
         }
 
-        gbc.gridx = 1;
-        gbc.gridy = 1;
+        gbc.gridx = 1; gbc.gridy = 1;
         formPanel.add(radioPanel, gbc);
-
         mainPanel.add(formPanel, BorderLayout.CENTER);
 
-        // 3. Panneau des boutons (Play / Quitter)
+        // 5. Boutons d'action
         JPanel buttonPanel = new JPanel();
         buttonPanel.setOpaque(false);
 
-        btnJouer = new JButton("PLAY");
-        btnJouer.setFont(new Font("Arial", Font.BOLD, 16));
-        btnJouer.setBackground(new Color(46, 139, 87));
-        btnJouer.setForeground(Color.WHITE);
-        btnJouer.setPreferredSize(new Dimension(120, 40));
-        btnJouer.addActionListener(this);
+        btnJouer = creerBoutonImage("/resources/bouton_play.png", "PLAY");
+        btnQuitter = creerBoutonImage("/resources/bouton_quitter.png", "Quitter");
 
-        btnQuitter = new JButton("Quitter");
-        btnQuitter.setFont(new Font("Arial", Font.PLAIN, 14));
-        btnQuitter.setPreferredSize(new Dimension(100, 40));
+        btnJouer.addActionListener(this);
         btnQuitter.addActionListener(this);
 
         buttonPanel.add(btnJouer);
         buttonPanel.add(btnQuitter);
-
         mainPanel.add(buttonPanel, BorderLayout.SOUTH);
 
-        // Ajout du panneau à la fenêtre
         setContentPane(mainPanel);
     }
 
     /**
-     * Méthode renvoyant le nom de l'animal sélectionné
+     * Méthode utilitaire pour générer un bouton.
      */
-    private String getAnimalSelectionne() {
-        if (rbSanglier.isSelected()) return "Sanglier";
-        if (rbRenard.isSelected()) return "Renard";
-        if (rbTaupe.isSelected()) return "Taupe";
-        if (rbLapin.isSelected()) return "Lapin";
-        return "Cochon";
+    private JButton creerBoutonImage(String cheminImage, String texteSecours) {
+        JButton bouton = new JButton();
+        try {
+            Image img = ImageIO.read(getClass().getResource(cheminImage)); 
+            bouton.setIcon(new ImageIcon(img));
+            bouton.setContentAreaFilled(false);
+            bouton.setBorderPainted(false);
+            bouton.setFocusPainted(false);
+            bouton.setOpaque(false);
+        } catch (Exception e) {
+            // Si les images des boutons ne sont pas là, on fait des boutons normaux
+            bouton.setText(texteSecours); 
+            bouton.setFont(new Font("Arial", Font.BOLD, 16));
+        }
+        bouton.setPreferredSize(new Dimension(120, 50));
+        return bouton;
     }
 
-    /**
-     * Gestion des événements de clics sur les boutons
-     */
+    private String getAnimalSelectionne() {
+        if (rbSanglier.isSelected()) return "Sanglier";
+        if (rbPoule.isSelected()) return "Poule";
+        if (rbVache.isSelected()) return "Vache";
+        if (rbLapin.isSelected()) return "Lapin";
+        return "Sanglier";
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == btnJouer) {
@@ -178,26 +181,17 @@ public class EcranAccueil extends JFrame implements ActionListener {
             if (pseudo.isEmpty()) {
                 JOptionPane.showMessageDialog(this,
                         "Veuillez saisir un pseudo avant de jouer !",
-                        "Attention",
-                        JOptionPane.WARNING_MESSAGE); //
+                        "Attention", JOptionPane.WARNING_MESSAGE); 
                 return;
             }
 
             String animal = getAnimalSelectionne();
 
-            // Message de confirmation avant de lancer le jeu / la salle d'attente
             JOptionPane.showMessageDialog(this,
                     "Bienvenue " + pseudo + " !\nVous avez choisi : " + animal + ".\nLancement de la partie...",
-                    "Partie lancée",
-                    JOptionPane.INFORMATION_MESSAGE); //
+                    "Partie lancée", JOptionPane.INFORMATION_MESSAGE); 
 
-            // TODO : Passer à l'écran de jeu ou à la salle d'attente (salle de lobby)
-            // Exemple : 
-            // FenetreDeJeu jeu = new FenetreDeJeu(pseudo, animal);
-            // jeu.setVisible(true);
-
-            // Fermeture de la fenêtre d'accueil
-            this.dispose();
+            this.dispose(); 
 
         } else if (e.getSource() == btnQuitter) {
             System.exit(0);
@@ -205,10 +199,37 @@ public class EcranAccueil extends JFrame implements ActionListener {
     }
 
     public static void main(String[] args) {
-        // Lancement dans le Thread Event Dispatcher (EDT) recommandé par Swing[cite: 34]
         SwingUtilities.invokeLater(() -> {
-            EcranAccueil accueil = new EcranAccueil();
-            accueil.setVisible(true); //
+            new EcranAccueil().setVisible(true); 
         });
+    }
+}
+
+/**
+ * Classe personnalisée redéfinissant JPanel pour peindre l'image de fond depuis un chemin absolu.
+ */
+class PanneauFond extends JPanel {
+    private Image imageFond;
+
+    public PanneauFond(String cheminAbsoluImage) {
+        try {
+            // Utilisation de java.io.File pour aller chercher l'image sur le Bureau[cite: 50]
+            File fichierImage = new File(cheminAbsoluImage);
+            if(fichierImage.exists()) {
+                imageFond = ImageIO.read(fichierImage); 
+            } else {
+                System.err.println("Le fichier n'a pas été trouvé à l'emplacement : " + cheminAbsoluImage);
+            }
+        } catch (Exception e) {
+            System.err.println("Erreur lors du chargement de l'image : " + e.getMessage());
+        }
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        if (imageFond != null) {
+            g.drawImage(imageFond, 0, 0, this.getWidth(), this.getHeight(), this);
+        }
     }
 }
