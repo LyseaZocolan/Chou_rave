@@ -43,7 +43,7 @@ import javax.swing.SwingUtilities;
 public class EcranAccueil extends JFrame implements ActionListener { 
 
     private JTextField txtPseudo;
-    private JRadioButton rbSanglier, rbPoule, rbVache, rbLapin;
+    private JRadioButton rbSanglier, rbPoule, rbRenard, rbLapin, rbTaupe;
     private ButtonGroup groupeAnimaux;
     private JButton btnJouer, btnQuitter;
 
@@ -101,10 +101,11 @@ public class EcranAccueil extends JFrame implements ActionListener {
 
         rbSanglier = new JRadioButton("Sanglier", true);
         rbPoule = new JRadioButton("Poule");
-        rbVache = new JRadioButton("Vache");
+        rbRenard = new JRadioButton("Renard");
         rbLapin = new JRadioButton("Lapin");
+        rbTaupe = new JRadioButton("Taupe");
 
-        JRadioButton[] animaux = {rbSanglier, rbPoule, rbVache, rbLapin};
+        JRadioButton[] animaux = {rbSanglier, rbPoule, rbRenard, rbLapin, rbTaupe};
         groupeAnimaux = new ButtonGroup();
 
         JPanel radioPanel = new JPanel(new GridBagLayout());
@@ -168,8 +169,9 @@ public class EcranAccueil extends JFrame implements ActionListener {
     private String getAnimalSelectionne() {
         if (rbSanglier.isSelected()) return "Sanglier";
         if (rbPoule.isSelected()) return "Poule";
-        if (rbVache.isSelected()) return "Vache";
+        if (rbRenard.isSelected()) return "Renard";
         if (rbLapin.isSelected()) return "Lapin";
+        if (rbTaupe.isSelected()) return "Taupe";
         return "Sanglier";
     }
 
