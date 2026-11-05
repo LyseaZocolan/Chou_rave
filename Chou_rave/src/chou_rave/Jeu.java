@@ -14,10 +14,17 @@ import java.util.ArrayList;
 public class Jeu {
     private Avatar monAvatar;
     private ArrayList<Nourriture> listeNourriture;
+    private Terrier monTerrier;
+    
 
     public Jeu() {
         this.monAvatar = new Avatar(); 
         this.listeNourriture = new ArrayList<>();
+        this.monTerrier = new Terrier();
+        
+        for (int i = 0; i < 5; i++) {
+            this.listeNourriture.add(new Nourriture());
+        }
     }
 
     public void miseAJour() {
@@ -45,6 +52,22 @@ public class Jeu {
             }
         }
     }
+    
+    public void essayerDeposerNourriture() {
+        // On vérifie la collision entre l'avatar et le terrier[cite: 24]
+        if (!((monTerrier.getX() >= monAvatar.getX() + monAvatar.getLargeur()) || 
+              (monTerrier.getX() + monTerrier.getLargeur() <= monAvatar.getX()) || 
+              (monTerrier.getY() >= monAvatar.getY() + monAvatar.getHauteur()) || 
+              (monTerrier.getY() + monTerrier.getHauteur() <= monAvatar.getY()))) {
+            
+            // S'il y a collision, on vide le sac[cite: 24]
+            this.monAvatar.deposerNourritureTerrier();
+            System.out.println("Nourriture déposée en sécurité !");
+        } else {
+            System.out.println("Tu es trop loin du terrier !");
+        }
+    }
+    
     private boolean detecterCollision(Avatar avatar, Nourriture n){
         if ((n.getX() >= avatar.getX() + avatar.getLargeur()) || (n.getX() + n.getTaille() <= avatar.getX()) || (n.getY() >= avatar.getY() + avatar.getHauteur()) || (n.getY() +n.getTaille() <= avatar.getY())){
             return false;
@@ -55,6 +78,7 @@ public class Jeu {
     }
 
     public void rendu(Graphics2D contexte) {
+        this.monTerrier.rendu(contexte);
         for (Nourriture n : listeNourriture){
             n.rendu(contexte);
         }
