@@ -17,11 +17,15 @@ import java.util.List;
 
 public class JeuFermier {
     JeuCoordonnees position; 
-    Image imageFermier;
+    Image imageFermier; // Tu peux garder ou enlever cette ligne
     
     public JeuFermier(int x, int y, String nomFichierImage){
         this.position = new JeuCoordonnees(x, y);
-        this.imageFermier = new ImageIcon(nomFichierImage).getImage();
+        // Solution de secours : on évite le plantage si l'image est introuvable
+        java.net.URL imageUrl = getClass().getResource(nomFichierImage);
+        if (imageUrl != null) {
+            this.imageFermier = new ImageIcon(imageUrl).getImage();
+        }
     }
     
     // FONCTION QUI DÉFINIT LES OBSTACLES SELON LA MATRICE DE LA MAP (32x32)
