@@ -80,11 +80,20 @@ public class JeuFenetre extends JFrame {
             int tailleTuile = 32; // Chaque tuile fait 32 pixels
             
             for (JeuFermier fermier : listeFermiers) {
-                g.drawImage(fermier.imageFermier, 
-                            fermier.position.getX() * tailleTuile, 
-                            fermier.position.getY() * tailleTuile, 
-                            64, 64, // Taille d'affichage du fermier (2 tuiles de haut/large pour qu'il soit bien visible)
-                            this);
+                // Vérification de sécurité : si l'image est chargée, on l'affiche
+                if (fermier.imageFermier != null) {
+                    g.drawImage(fermier.imageFermier, 
+                                fermier.position.getX() * tailleTuile, 
+                                fermier.position.getY() * tailleTuile, 
+                                64, 64, // Taille d'affichage du fermier (2 tuiles de haut/large)
+                                this);
+                } else {
+                    // Solution de secours : si l'image est absente, on dessine un carré rouge
+                    g.setColor(Color.RED);
+                    g.fillRect(fermier.position.getX() * tailleTuile, 
+                               fermier.position.getY() * tailleTuile, 
+                               32, 32);
+                }
             }
 
             // Texte d'information
@@ -92,5 +101,12 @@ public class JeuFenetre extends JFrame {
             g.setFont(new Font("Arial", Font.BOLD, 16));
             g.drawString("Fermiers en patrouille : " + listeFermiers.size(), 20, 30);
         }
+    }
+    
+    public static void main(String[] args) {
+        javax.swing.SwingUtilities.invokeLater(() -> {
+            JeuFenetre fenetre = new JeuFenetre();
+            fenetre.setVisible(true);
+        });
     }
 }
