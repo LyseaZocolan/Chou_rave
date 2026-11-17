@@ -37,10 +37,10 @@ public class JeuFenetre extends JFrame {
 
         // On place nos 4 fermiers sur le chemin en terre de la map
         listeFermiers = new ArrayList<>();
-        listeFermiers.add(new JeuFermier(16, 8, "fermier1.png"));  // Sur le chemin du haut
-        listeFermiers.add(new JeuFermier(16, 12, "fermier2.png")); // Près du pont
-        listeFermiers.add(new JeuFermier(16, 18, "fermier3.png")); // Sur le chemin du bas
-        listeFermiers.add(new JeuFermier(22, 18, "fermier4.png")); // Vers la droite
+        listeFermiers.add(new JeuFermier(16, 8, "/resources/fermier1.png"));  // Sur le chemin du haut
+        listeFermiers.add(new JeuFermier(16, 12, "/resources/fermier2.png")); // Près du pont
+        listeFermiers.add(new JeuFermier(16, 18, "/resources/fermier3.png")); // Sur le chemin du bas
+        listeFermiers.add(new JeuFermier(22, 18, "/resources/fermier4.png")); // Vers la droite
     
 
         PanneauJeu panneau = new PanneauJeu();
@@ -104,12 +104,14 @@ public class JeuFenetre extends JFrame {
         }
     }
     
-//    public static List<JeuFermier> getlisteFermiers() {
-//        return listeFermiers;
-//    public static void main(String[] args) {
-//        javax.swing.SwingUtilities.invokeLater(() -> {
-//            JeuFenetre fenetre = new JeuFenetre();
-//            fenetre.setVisible(true);
-//        });
-//    }
+    public static List<JeuFermier> getlisteFermiers() {
+        return listeFermiers;
+    }
+    
+    public static void main(String[] args) {
+        javax.swing.SwingUtilities.invokeLater(() -> {
+            JeuFenetre fenetre = new JeuFenetre();
+            fenetre.setVisible(true);
+        });
+    }
 }

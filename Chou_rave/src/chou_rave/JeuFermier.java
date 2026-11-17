@@ -10,22 +10,45 @@ package chou_rave;
  */
 
 import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import javax.swing.ImageIcon;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 
 public class JeuFermier {
     JeuCoordonnees position; 
     Image imageFermier; // Tu peux garder ou enlever cette ligne
+    private BufferedImage sprite;
     
     public JeuFermier(int x, int y, String nomFichierImage){
         this.position = new JeuCoordonnees(x, y);
-        // Solution de secours : on évite le plantage si l'image est introuvable
-        java.net.URL imageUrl = getClass().getResource(nomFichierImage);
-        if (imageUrl != null) {
-            this.imageFermier = new ImageIcon(imageUrl).getImage();
+        
+        try {
+            this.sprite = ImageIO.read(getClass().getClassLoader().getResource("resources/fermier1.png"));
+        } catch (IOException ex) {
+            Logger.getLogger(Avatar.class.getName()).log(Level.SEVERE, null, ex);
         }
+        try {
+            this.sprite = ImageIO.read(getClass().getClassLoader().getResource("resources/fermier2.png"));
+        } catch (IOException ex) {
+            Logger.getLogger(Avatar.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            this.sprite = ImageIO.read(getClass().getClassLoader().getResource("resources/fermier13.png"));
+        } catch (IOException ex) {
+            Logger.getLogger(Avatar.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            this.sprite = ImageIO.read(getClass().getClassLoader().getResource("resources/fermier4.png"));
+        } catch (IOException ex) {
+            Logger.getLogger(Avatar.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }
     
     // FONCTION QUI DÉFINIT LES OBSTACLES SELON LA MATRICE DE LA MAP (32x32)
