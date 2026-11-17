@@ -24,14 +24,14 @@ public class Chou_rave {
         EcranAccueil ecran = new EcranAccueil();
         
         
-        
-        //fermiers
-        List<JeuFermier> lesFermiers = JeuFenetre.getlisteFermiers();
-        for (JeuFermier fermier : lesFermiers){
-            ArrayList<JeuCoordonnees> map = new ArrayList<>();
-            
-        }
-        
+//        
+//        //fermiers
+//        List<JeuFermier> lesFermiers = JeuFenetre.getlisteFermiers();
+//        for (JeuFermier fermier : lesFermiers){
+//            ArrayList<JeuCoordonnees> map = new ArrayList<>();
+//            
+//        }
+//        
         //avatars
         
         Avatar avatar1 = new Avatar();
@@ -59,8 +59,8 @@ public class Chou_rave {
             JeuCoordonnees coordHasard = terrier.get(indexAleatoire);
             int coorx = coordHasard.getX();
             int coory = coordHasard.getY();
-            joueur.setposition_x(coorx);
-            joueur.setposition_y(coory);
+            joueur.setX(coorx);
+            joueur.setY(coory);
             }
         }
         

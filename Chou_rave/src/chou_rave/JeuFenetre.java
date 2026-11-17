@@ -104,12 +104,12 @@ public class JeuFenetre extends JFrame {
         }
     }
     
-    public static List<JeuFermier> getlisteFermiers() {
-        return listeFermiers;
-    public static void main(String[] args) {
-        javax.swing.SwingUtilities.invokeLater(() -> {
-            JeuFenetre fenetre = new JeuFenetre();
-            fenetre.setVisible(true);
-        });
-    }
+//    public static List<JeuFermier> getlisteFermiers() {
+//        return listeFermiers;
+//    public static void main(String[] args) {
+//        javax.swing.SwingUtilities.invokeLater(() -> {
+//            JeuFenetre fenetre = new JeuFenetre();
+//            fenetre.setVisible(true);
+//        });
+//    }
 }

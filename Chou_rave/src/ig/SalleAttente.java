@@ -107,7 +107,7 @@ public class SalleAttente extends JFrame {
                 
                 // --- SIMULATION POUR LE TEST VISUEL ---
                 if (joueursActuels[0] < 4) {
-                    //joueursActuels[0]++; // Un joueur arrive (simulation)
+                    joueursActuels[0]++; // Un joueur arrive (simulation)
                     lblStatut.setText("Joueurs connectés : " + joueursActuels[0] + " / 4");
                 }
 
