@@ -45,16 +45,16 @@ public class JeuFenetre extends JFrame {
         PanneauJeu panneau = new PanneauJeu();
         this.add(panneau);
 
-        // Un petit compteur pour rythmer les vitesses
+        // Un compteur pour rythmer les vitesses
         final int[] compteur = {0};
 
-        // Timer réglé à 500 ms (0.5 seconde) pour accélérer le tout !
+        // Timer réglé à 0.5 seconde pour accélérer
         Timer timer = new Timer(500, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 compteur[0]++; // On avance le compteur à chaque tic
 
-                // On parcourt les fermiers un par un grâce à leur numéro (index i)
+                // On parcourt les fermiers un par un grâce à leur numéro
                 for (int i = 0; i < listeFermiers.size(); i++) {
                     JeuFermier fermier = listeFermiers.get(i);
 
