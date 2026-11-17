@@ -4,7 +4,9 @@
  */
 package chou_rave;
 
+import ig.EcranAccueil;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -20,7 +22,16 @@ public class Chou_rave {
         // TODO code application logic here
         
         EcranAccueil ecran = new EcranAccueil();
-        JeuMap carte = new JeuMap();
+        
+        
+        
+        //fermiers
+        List<JeuFermier> lesFermiers = JeuFenetre.getlisteFermiers();
+        for (JeuFermier fermier : lesFermiers){
+            ArrayList<JeuCoordonnees> map = new ArrayList<>();
+            
+        }
+        
         //avatars
         
         Avatar avatar1 = new Avatar();
@@ -48,9 +59,12 @@ public class Chou_rave {
             JeuCoordonnees coordHasard = terrier.get(indexAleatoire);
             int coorx = coordHasard.getX();
             int coory = coordHasard.getY();
-            joueur.setX(coorx);
-            joueur.setY(coory);
+            joueur.setposition_x(coorx);
+            joueur.setposition_y(coory);
+            }
         }
-    }
+        
+        //prendre les légumes
     
+    }
 }
