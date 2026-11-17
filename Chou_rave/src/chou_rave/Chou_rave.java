@@ -35,7 +35,7 @@ public class Chou_rave {
         listeAvatar.add(avatar4);
                
         
-        for(Avatar joeur : listeAvatar){
+        for(Avatar joueur : listeAvatar){
             ArrayList<JeuCoordonnees> terrier = new ArrayList<>();
             int a = 500;
             int b = 500;
@@ -46,10 +46,10 @@ public class Chou_rave {
             Random random = new Random();
             int indexAleatoire = random.nextInt(terrier.size());
             JeuCoordonnees coordHasard = terrier.get(indexAleatoire);
-            int x = coordHasard.getX();
-            int y = coordHasard.getY();
-            joueur.setposition_x(x);
-            joueur.setpostion_y(y);
+            int coorx = coordHasard.getX();
+            int coory = coordHasard.getY();
+            joueur.setposition_x(coorx);
+            joueur.setposition_y(coory);
         }
     }
     

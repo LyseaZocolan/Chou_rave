@@ -123,4 +123,12 @@ public class Avatar {
     public double getHauteur() {return 30.0; }
     public double getX() {return x; }
     public double getY() {return y; }
+
+    void setposition_x(int coorx) {
+        this.x = coorx;
+    }
+    
+     void setposition_y(int coory) {
+        this.y = coory;
+    }
 }
