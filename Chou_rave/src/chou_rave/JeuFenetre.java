@@ -10,24 +10,21 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.Timer;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.*;
+import java.awt.*;
 
 /**
  *
  * @author mrajuste
  */
     
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.List;
+
 
 public class JeuFenetre extends JFrame {
     private List<JeuFermier> listeFermiers;
