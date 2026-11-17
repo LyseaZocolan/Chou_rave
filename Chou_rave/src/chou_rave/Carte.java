@@ -29,7 +29,7 @@ public class Carte {
         BufferedReader lecteur = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("carte(5).txt")));
         
         // D'après ta matrice, la carte fait 32 par 32 tuiles et chaque tuile fait 32 pixels
-        this.largeur = 32;
+        this.largeur = 50;
         this.hauteur = 32;
         this.tailleTuile = 32;
         

@@ -33,11 +33,11 @@ public class FenetreDeJeu extends JFrame implements ActionListener {
     public FenetreDeJeu() {
         // initialisation de la fenetre
         this.setTitle("TileMupping");
-        this.setSize(1024, 1024);
+        this.setSize(1600, 1024);
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.jLabel1 = new JLabel();
-        this.jLabel1.setPreferredSize(new java.awt.Dimension(1024, 1024));
+        this.jLabel1.setPreferredSize(new java.awt.Dimension(1600, 1024));
         this.setContentPane(this.jLabel1);
         this.pack();
 
