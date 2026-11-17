@@ -39,7 +39,7 @@ public class JeuFenetre extends JFrame {
         listeFermiers = new ArrayList<>();
         listeFermiers.add(new JeuFermier(2, 5, "fermier1.png")); // Fermier 0 (Rapide)
         listeFermiers.add(new JeuFermier(6, 4, "fermier2.png")); // Fermier 1 (Rapide)
-        listeFermiers.add(new JeuFermier(5, 11, "fermier3.png")); // Fermier 2 (Lent)
+        listeFermiers.add(new JeuFermier(1, 3, "fermier3.png")); // Fermier 2 (Lent)
         listeFermiers.add(new JeuFermier(9, 5, "fermier4.png")); // Fermier 3 (Lent)
 
         PanneauJeu panneau = new PanneauJeu();
