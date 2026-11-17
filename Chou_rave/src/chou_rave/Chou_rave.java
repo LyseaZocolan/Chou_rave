@@ -20,7 +20,7 @@ public class Chou_rave {
         // TODO code application logic here
         
         EcranAccueil ecran = new EcranAccueil();
-        JeuMap catre = new JeuMAp;
+        JeuMap carte = new JeuMap();
         //avatars
         
         Avatar avatar1 = new Avatar();
@@ -48,8 +48,8 @@ public class Chou_rave {
             JeuCoordonnees coordHasard = terrier.get(indexAleatoire);
             int coorx = coordHasard.getX();
             int coory = coordHasard.getY();
-            joueur.setposition_x(coorx);
-            joueur.setposition_y(coory);
+            joueur.setX(coorx);
+            joueur.setY(coory);
         }
     }
     
