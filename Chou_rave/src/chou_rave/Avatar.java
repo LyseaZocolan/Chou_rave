@@ -138,4 +138,9 @@ public class Avatar {
         this.x = x;
         this.y = y;
     }
-}
+
+    String getPseudo() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+ }

@@ -23,7 +23,7 @@ import java.util.List;
     
 
 public class JeuFenetre extends JFrame {
-    private List<JeuFermier> listeFermiers;
+    private static List<JeuFermier> listeFermiers;
     private Carte carteJeu; // On intègre la classe Carte de ton projet
 
     public JeuFenetre() {
@@ -41,6 +41,7 @@ public class JeuFenetre extends JFrame {
         listeFermiers.add(new JeuFermier(16, 12, "fermier2.png")); // Près du pont
         listeFermiers.add(new JeuFermier(16, 18, "fermier3.png")); // Sur le chemin du bas
         listeFermiers.add(new JeuFermier(22, 18, "fermier4.png")); // Vers la droite
+    
 
         PanneauJeu panneau = new PanneauJeu();
         this.add(panneau);
@@ -103,6 +104,8 @@ public class JeuFenetre extends JFrame {
         }
     }
     
+    public static List<JeuFermier> getlisteFermiers() {
+        return listeFermiers;
     public static void main(String[] args) {
         javax.swing.SwingUtilities.invokeLater(() -> {
             JeuFenetre fenetre = new JeuFenetre();
