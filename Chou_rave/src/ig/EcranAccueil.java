@@ -9,6 +9,7 @@ package ig;
  * @author ntessier
  */
 
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -28,10 +29,15 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 
-public class EcranAccueil extends JFrame implements ActionListener { 
+public class EcranAccueil extends JFrame implements ActionListener {
 
     private JButton btnJouer;
-    private JButton btnQuitter; // Ajout du bouton quitter
+    private JButton btnQuitter;
+
+    // TODO : Modifiez ces chemins avec ceux de votre ordinateur
+    private String cheminFond = "Z:\\Desktop\\VERT\\Info_Projet\\Images\\Ecran accueil.jpg";
+    private String cheminBoutonJouer = "Z:\\Desktop\\VERT\\Info_Projet\\Images\\Bouton Jouer.png";
+    private String cheminBoutonQuitter = "Z:\\Desktop\\VERT\\Info_Projet\\Images\\Bouton Quitter.png";
 
     public EcranAccueil() {
         setTitle("De la Terre à l'Assiette - Accueil");
@@ -41,35 +47,25 @@ public class EcranAccueil extends JFrame implements ActionListener {
         setResizable(false);
 
         // Fond d'écran
-        PanneauFond mainPanel = new PanneauFond("Z:\\Desktop\\Info_Projet\\Chou_rave\\Image Interface\\Fond Interface Graphique.jpg");
+        PanneauFond mainPanel = new PanneauFond(cheminFond);
         mainPanel.setLayout(new BorderLayout(10, 10));
-        mainPanel.setBorder(BorderFactory.createEmptyBorder(50, 20, 50, 20));
+        mainPanel.setBorder(BorderFactory.createEmptyBorder(50, 20, 10, 20));
 
-        // Titre
-        JLabel lblTitre = new JLabel("De la Terre à l'Assiette", SwingConstants.CENTER);
-        lblTitre.setFont(new Font("Arial", Font.BOLD, 40));
-        lblTitre.setForeground(Color.WHITE);
         
-        // Sous-titre
-        JLabel lblSousTitre = new JLabel("Vole la nourriture au fermier !", SwingConstants.CENTER);
-        lblSousTitre.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 22));
-        lblSousTitre.setForeground(Color.WHITE);
 
         JPanel headerPanel = new JPanel(new BorderLayout());
         headerPanel.setOpaque(false);
-        headerPanel.add(lblTitre, BorderLayout.NORTH);
-        headerPanel.add(lblSousTitre, BorderLayout.SOUTH);
         mainPanel.add(headerPanel, BorderLayout.NORTH);
 
         // Panneau des boutons au centre/bas
         JPanel buttonPanel = new JPanel();
         buttonPanel.setOpaque(false);
         
-        btnJouer = creerBoutonImage("/resources/bouton_play.png", "JOUER");
+        btnJouer = creerBoutonImage(cheminBoutonJouer, "JOUER");
         btnJouer.addActionListener(this);
         buttonPanel.add(btnJouer);
         
-        btnQuitter = creerBoutonImage("/resources/bouton_quitter.png", "QUITTER");
+        btnQuitter = creerBoutonImage(cheminBoutonQuitter, "QUITTER");
         btnQuitter.addActionListener(this);
         buttonPanel.add(btnQuitter);
         
@@ -77,20 +73,34 @@ public class EcranAccueil extends JFrame implements ActionListener {
         setContentPane(mainPanel);
     }
 
-    private JButton creerBoutonImage(String chemin, String texteSecours) {
+    /**
+     * Méthode pour créer un bouton à partir d'une image stockée sur le disque
+     */
+    private JButton creerBoutonImage(String cheminAbsolu, String texteSecours) {
         JButton bouton = new JButton();
         try {
-            Image img = ImageIO.read(getClass().getResource(chemin)); 
-            bouton.setIcon(new ImageIcon(img));
-            bouton.setContentAreaFilled(false);
-            bouton.setBorderPainted(false);
-            bouton.setFocusPainted(false);
-            bouton.setOpaque(false);
+            File fichierImg = new File(cheminAbsolu);
+            if (fichierImg.exists()) {
+                Image img = ImageIO.read(fichierImg);
+                
+                // Redimensionnement de l'image du bouton (Largeur 200, Hauteur 60)
+                Image imgRedimensionnee = img.getScaledInstance(200, 60, Image.SCALE_SMOOTH); 
+                
+                bouton.setIcon(new ImageIcon(imgRedimensionnee));
+                bouton.setContentAreaFilled(false);
+                bouton.setBorderPainted(false);
+                bouton.setFocusPainted(false);
+                bouton.setOpaque(false);
+            } else {
+                // Si l'image n'est pas trouvée, on met du texte classique
+                bouton.setText(texteSecours); 
+                bouton.setFont(new Font("Arial", Font.BOLD, 20));
+            }
         } catch (Exception e) {
             bouton.setText(texteSecours); 
             bouton.setFont(new Font("Arial", Font.BOLD, 20));
         }
-        bouton.setPreferredSize(new Dimension(150, 60));
+        bouton.setPreferredSize(new Dimension(200, 60)); 
         return bouton;
     }
 
@@ -106,10 +116,13 @@ public class EcranAccueil extends JFrame implements ActionListener {
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new EcranAccueil().setVisible(true)); 
+        SwingUtilities.invokeLater(() -> new EcranAccueil().setVisible(true));
     }
 }
 
+/**
+ * Classe interne pour gérer l'image de fond
+ */
 class PanneauFond extends JPanel {
     private Image imageFond;
 
@@ -120,7 +133,7 @@ class PanneauFond extends JPanel {
                 imageFond = ImageIO.read(fichierImage); 
             }
         } catch (Exception e) {
-            System.err.println("Erreur image : " + e.getMessage());
+            System.err.println("Erreur image de fond : " + e.getMessage());
         }
     }
 
