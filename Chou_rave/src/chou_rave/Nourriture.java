@@ -19,8 +19,8 @@ public class Nourriture {
 
     public Nourriture() {
         // Apparition aléatoire sur la map (en gardant une marge par rapport aux bords de 400px)
-        this.x = Math.random() * 370;
-        this.y = Math.random() * 340;
+        this.x = Math.random() * 980;
+        this.y = Math.random() * 980;
         
         // Attribution aléatoire d'un type de légume/fruit
         double proba = Math.random();
