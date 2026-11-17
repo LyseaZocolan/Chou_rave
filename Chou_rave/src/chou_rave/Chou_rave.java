@@ -4,6 +4,9 @@
  */
 package chou_rave;
 
+import java.util.ArrayList;
+import java.util.Random;
+
 /**
  *
  * @author lzocolan
@@ -15,6 +18,39 @@ public class Chou_rave {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        
+        EcranAccueil ecran = new EcranAccueil();
+        JeuMap catre = new JeuMAp;
+        //avatars
+        
+        Avatar avatar1 = new Avatar();
+        Avatar avatar2 = new Avatar();
+        Avatar avatar3 = new Avatar();
+        Avatar avatar4 = new Avatar();
+        
+        ArrayList<Avatar> listeAvatar = new ArrayList<>();
+        listeAvatar.add(avatar1);
+        listeAvatar.add(avatar2);
+        listeAvatar.add(avatar3);
+        listeAvatar.add(avatar4);
+               
+        
+        for(Avatar joeur : listeAvatar){
+            ArrayList<JeuCoordonnees> terrier = new ArrayList<>();
+            int a = 500;
+            int b = 500;
+            for (int x = 0; x <= a; x++) {
+                for (int y = 0; y <= b; y++) {
+                    terrier.add(new JeuCoordonnees(x, y));
+            }
+            Random random = new Random();
+            int indexAleatoire = random.nextInt(terrier.size());
+            JeuCoordonnees coordHasard = terrier.get(indexAleatoire);
+            int x = coordHasard.getX();
+            int y = coordHasard.getY();
+            joueur.setposition_x(x);
+            joueur.setpostion_y(y);
+        }
     }
     
 }
