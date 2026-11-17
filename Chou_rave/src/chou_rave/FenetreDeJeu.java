@@ -63,7 +63,7 @@ public class FenetreDeJeu extends JFrame implements ActionListener {
     }
 
     /**
-     * @param args the command line arguments
+     * @param args the command line argumentss
      */
     public static void main(String[] args) {
         FenetreDeJeu fenetre = new FenetreDeJeu();
