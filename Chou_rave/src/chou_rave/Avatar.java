@@ -124,6 +124,7 @@ public class Avatar {
     public double getHauteur() {return 30.0; }
     public double getX() {return x; }
     public double getY() {return y; }
+
     
     public void setX(double x) {
         this.x = x;
