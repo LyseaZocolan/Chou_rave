@@ -31,16 +31,16 @@ public class JeuFermier {
             return true;
         }
         
-        // 2. La grande zone de forêt / arbres en haut (y de 0 à 8 environ)
+        // 2. La grande zone de forêt / arbres en haut (y de 0 à 8)
         if (y <= 8 && (x <= 18)) {
             return true;
         }
         
-        // 3. La rivière horizontale au milieu (y entre 11 et 14 environ)
+        // 3. La rivière horizontale au milieu (y entre 11 et 14)
         if (y >= 11 && y <= 14) {
-            // Sauf sur le pont au milieu (x entre 12 et 13 par exemple)
+            // Sauf sur le pont au milieu (x entre 12 et 13)
             if (x >= 12 && x <= 13) {
-                return false; // Le pont est franchissable !
+                return false; // Le pont est franchissable
             }
             return true; // Le reste de la rivière est un obstacle
         }
@@ -50,7 +50,7 @@ public class JeuFermier {
             return true;
         }
         
-        // Sinon, la case est libre !
+        // Sinon, la case est libre
         return false;
     }
 
