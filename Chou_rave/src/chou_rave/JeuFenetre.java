@@ -90,10 +90,10 @@ public class JeuFenetre extends JFrame {
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
 
-            // 1. On dessine la carte
+            // On dessine la carte
             g.drawImage(imageFond, 0, 0, getWidth(), getHeight(), this);
 
-            // 2. On dessine chaque fermier avec sa propre image
+            // On dessine chaque fermier avec sa propre image
             int tailleCase = 40; 
             
             for (JeuFermier fermier : listeFermiers) {
@@ -104,7 +104,7 @@ public class JeuFenetre extends JFrame {
                             this);
             }
 
-            // 3. Texte d'information
+            // Texte d'information
             g.setColor(Color.WHITE);
             g.setFont(new Font("Arial", Font.BOLD, 14));
             g.drawString("Fermiers en patrouille : " + listeFermiers.size(), 20, 30);
