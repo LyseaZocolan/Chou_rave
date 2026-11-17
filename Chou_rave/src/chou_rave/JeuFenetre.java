@@ -10,24 +10,21 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.Timer;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.*;
+import java.awt.*;
 
 /**
  *
  * @author mrajuste
  */
     
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.List;
+
 
 public class JeuFenetre extends JFrame {
     private List<JeuFermier> listeFermiers;
@@ -42,22 +39,22 @@ public class JeuFenetre extends JFrame {
         listeFermiers = new ArrayList<>();
         listeFermiers.add(new JeuFermier(2, 5, "fermier1.png")); // Fermier 0 (Rapide)
         listeFermiers.add(new JeuFermier(6, 4, "fermier2.png")); // Fermier 1 (Rapide)
-        listeFermiers.add(new JeuFermier(5, 11, "fermier3.png")); // Fermier 2 (Lent)
+        listeFermiers.add(new JeuFermier(1, 3, "fermier3.png")); // Fermier 2 (Lent)
         listeFermiers.add(new JeuFermier(9, 5, "fermier4.png")); // Fermier 3 (Lent)
 
         PanneauJeu panneau = new PanneauJeu();
         this.add(panneau);
 
-        // Un petit compteur pour rythmer les vitesses
+        // Un compteur pour rythmer les vitesses
         final int[] compteur = {0};
 
-        // Timer réglé à 500 ms (0.5 seconde) pour accélérer le tout !
+        // Timer réglé à 0.5 seconde pour accélérer
         Timer timer = new Timer(500, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 compteur[0]++; // On avance le compteur à chaque tic
 
-                // On parcourt les fermiers un par un grâce à leur numéro (index i)
+                // On parcourt les fermiers un par un grâce à leur numéro
                 for (int i = 0; i < listeFermiers.size(); i++) {
                     JeuFermier fermier = listeFermiers.get(i);
 
@@ -90,10 +87,10 @@ public class JeuFenetre extends JFrame {
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
 
-            // 1. On dessine la carte
+            // On dessine la carte
             g.drawImage(imageFond, 0, 0, getWidth(), getHeight(), this);
 
-            // 2. On dessine chaque fermier avec sa propre image
+            // On dessine chaque fermier avec sa propre image
             int tailleCase = 40; 
             
             for (JeuFermier fermier : listeFermiers) {
@@ -104,7 +101,7 @@ public class JeuFenetre extends JFrame {
                             this);
             }
 
-            // 3. Texte d'information
+            // Texte d'information
             g.setColor(Color.WHITE);
             g.setFont(new Font("Arial", Font.BOLD, 14));
             g.drawString("Fermiers en patrouille : " + listeFermiers.size(), 20, 30);
