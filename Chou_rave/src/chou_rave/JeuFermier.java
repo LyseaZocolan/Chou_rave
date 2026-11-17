@@ -48,11 +48,7 @@ public class JeuFermier {
         } catch (IOException ex) {
             Logger.getLogger(Avatar.class.getName()).log(Level.SEVERE, null, ex);
         }
-        // Solution de secours : on évite le plantage si l'image est introuvable
-        java.net.URL imageUrl = getClass().getResource(nomFichierImage);
-        if (imageUrl != null) {
-            this.imageFermier = new ImageIcon(imageUrl).getImage();
-        }
+        
     }
     
     // FONCTION QUI DÉFINIT LES OBSTACLES SELON LA MATRICE DE LA MAP (32x32)
