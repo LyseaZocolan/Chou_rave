@@ -68,9 +68,9 @@ public class Avatar {
 
         // Limites de la carte
         if (x < 0) x = 0;
-        if (x > 370) x = 370; 
+        if (x > 994) x = 994; 
         if (y < 0) y = 0;
-        if (y > 340) y = 340; 
+        if (y > 994) y = 994; 
     }
 
     public void rendu(Graphics2D contexte) {
