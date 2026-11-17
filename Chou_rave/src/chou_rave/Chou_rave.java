@@ -6,6 +6,7 @@ package chou_rave;
 
 import ig.EcranAccueil;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -25,7 +26,11 @@ public class Chou_rave {
         
         
         //fermiers
-        
+        List<JeuFermier> lesFermiers = JeuFenetre.getlisteFermiers();
+        for (JeuFermier fermier : lesFermiers){
+            ArrayList<JeuCoordonnees> map = new ArrayList<>();
+            
+        }
         
         //avatars
         
