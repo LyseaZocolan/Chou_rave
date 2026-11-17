@@ -4,6 +4,7 @@
  */
 package chou_rave;
 
+import ig.EcranAccueil;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -20,7 +21,12 @@ public class Chou_rave {
         // TODO code application logic here
         
         EcranAccueil ecran = new EcranAccueil();
-        JeuMap catre = new JeuMAp;
+        
+        
+        
+        //fermiers
+        
+        
         //avatars
         
         Avatar avatar1 = new Avatar();
@@ -50,7 +56,10 @@ public class Chou_rave {
             int coory = coordHasard.getY();
             joueur.setposition_x(coorx);
             joueur.setposition_y(coory);
+            }
         }
-    }
+        
+        //prendre les légumes
     
+    }
 }

@@ -15,7 +15,9 @@ import java.util.ArrayList;
 public class Avatar {
     protected double x, y;
     private boolean toucheGauche, toucheDroite, toucheHaut, toucheBas;
-    private double vitesse = 5.0; 
+    private double vitesse = 5.0;
+    
+   
 
     // Nouvelles caractéristiques pour la survie
     private double enduranceMax = 1000.0;
@@ -131,4 +133,5 @@ public class Avatar {
      void setposition_y(int coory) {
         this.y = coory;
     }
-}
+
+ }
