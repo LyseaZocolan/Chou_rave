@@ -39,10 +39,10 @@ public class SelectionPersonnage extends JFrame implements ActionListener {
     private ButtonGroup groupeAnimaux;
     private JButton btnValider;
     
-    // Noms des personnages (utiles pour le code, même s'ils ne sont plus affichés en texte)
+    // Noms des personnages 
     private String[] nomsPersonnages = {"Taupe", "Renard", "Sanglier", "Lapin", "Poule"};
     
-    // Vos 5 chemins d'images (à adapter si besoin)
+    // Chemins images 
     private String[] cheminsImages = {
         "Z:\\Desktop\\VERT\\Info_Projet\\Images\\Images Animaux Accueil\\Selection Personnage\\taupe.png",
         "Z:\\Desktop\\VERT\\Info_Projet\\Images\\Images Animaux Accueil\\Selection Personnage\\renard.png",
@@ -51,7 +51,7 @@ public class SelectionPersonnage extends JFrame implements ActionListener {
         "Z:\\Desktop\\VERT\\Info_Projet\\Images\\Images Animaux Accueil\\Selection Personnage\\poule.png"
     };
 
-    // Textes pour la zone bleue (capacités) que vous pourrez modifier[cite: 54]
+    // Textes pour la zone bleue (capacités) que vous pourrez modifier
     private String[] textesCapacites = {
         "Rapidité : +\n Capacité stockage : + \n Endurance : ++ \nCreuse des tunnels",
         "Rapidité : +++\n Capacité stockage : + \n Endurance : +++ \nVif",
@@ -86,21 +86,19 @@ public class SelectionPersonnage extends JFrame implements ActionListener {
             carte.setBackground(new Color(0, 0, 0, 160)); // Fond sombre transparent
             carte.setBorder(BorderFactory.createLineBorder(Color.ORANGE, 2));
 
-            // ZONE ROUGE : Grande image en haut avec ajustement complet (X et Y)
+            // Grande image en haut avec ajustement complet (X et Y)
             final int index = i; 
             
-            // 1. DÉCALAGE X : Déplace l'image horizontalement (négatif = vers la gauche)
+            // DÉCALAGE X : Déplace l'image horizontalement (négatif = vers la gauche)
             final int[] decalagesX = {-14, -9, -3, -4, -10}; 
             
-            // 2. ÉTIREMENT LARGEUR : Augmente la largeur de l'image
+            // ÉTIREMENT LARGEUR : Augmente la largeur de l'image
             final int[] etirementsLargeur = {20, 15, 5, 10, 22}; 
             
-            // 3. DÉCALAGE Y : Déplace l'image verticalement (négatif = vers le haut)
-            // Cela permet de cacher le vide transparent au-dessus des personnages !
+            // DÉCALAGE Y : Déplace l'image verticalement (négatif = vers le haut)
             final int[] decalagesY = {-7, -7, -7, -7, -7}; 
             
-            // 4. HAUTEUR DE LA CARTE : On réduit la hauteur du panneau (220 au lieu de 250)
-            // C'est ce paramètre qui fait redescendre la bordure orange.
+            // HAUTEUR DE LA CARTE : On réduit la hauteur du panneau 
             final int hauteurPanneau = 220; 
             
             JPanel imgPanel = new JPanel() {
@@ -140,7 +138,7 @@ public class SelectionPersonnage extends JFrame implements ActionListener {
             };
             carte.add(imgPanel, BorderLayout.NORTH);
 
-            // ZONE BLEUE : Texte des capacités au centre[cite: 54]
+            // Texte des capacités au centre
             JTextArea txtCapacites = new JTextArea(textesCapacites[i]);
             txtCapacites.setFont(new Font("Arial", Font.BOLD, 12));
             txtCapacites.setForeground(new Color(200, 230, 255)); // Bleu très clair pour la lisibilité
