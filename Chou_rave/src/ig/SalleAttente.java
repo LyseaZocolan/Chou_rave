@@ -9,6 +9,7 @@ package ig;
  * @author ntessier
  */
 
+import chou_rave.FenetreDeJeu;
 import java.awt.BasicStroke;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -24,12 +25,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.awt.Image;
+import java.util.ArrayList;
+import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
 /**
@@ -40,9 +44,14 @@ public class SalleAttente extends JFrame {
 
     private JLabel lblStatut;
     private Timer timerVerification;
+    private String pseudo;
+    private String animal;
 
     // Constructeur qui récupère le pseudo et l'animal du joueur depuis l'écran d'accueil
     public SalleAttente(String pseudo, String animal) {
+        this.pseudo = pseudo;
+        this.animal = animal;
+    
         setTitle("Salle d'attente - De la Terre à l'Assiette");
         setSize(600, 500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -92,43 +101,48 @@ public class SalleAttente extends JFrame {
     /**
      * Utilisation d'un Timer pour vérifier toutes les secondes si les 4 joueurs sont là.
      */
-    private void demarrerVerificationJoueurs() {
-        // Variable pour simuler l'arrivée des joueurs (à remplacer par la BDD)
-        final int[] joueursActuels = {1}; 
+        private void demarrerVerificationJoueurs() {
+        final int[] joueursActuels = {1};
 
-        // Le Timer s'exécute toutes les 1000 millisecondes (1 seconde)
-        timerVerification = new Timer(1000, new ActionListener() {
+        timerVerification = new Timer(3000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                
+
                 // TODO SCRUM MASTER : Intégration JDBC
-                // C'est ici que le Scrum Master doit faire sa requête SQL : 
                 // SELECT COUNT(*) FROM dresseurs;
-                
+
                 // --- SIMULATION POUR LE TEST VISUEL ---
                 if (joueursActuels[0] < 4) {
-                    joueursActuels[0]++; // Un joueur arrive (simulation)
+                    joueursActuels[0]++;
                     lblStatut.setText("Joueurs connectés : " + joueursActuels[0] + " / 4");
                 }
 
                 // Quand les 4 joueurs sont là
                 if (joueursActuels[0] >= 4) {
-                    timerVerification.stop(); 
-                    
-                    JOptionPane.showMessageDialog(SalleAttente.this, 
-                            "La partie est complète ! Lancement du jeu...", 
-                            "C'est parti !", JOptionPane.INFORMATION_MESSAGE); 
-                    
-                    // TODO DEVS AVATAR/PLATEFORME : Lancer le "vrai" jeu ici (FenetreDeJeuGUI)
-                    
-                    
-                    dispose(); // Fermer la salle d'attente
+                    timerVerification.stop();
+
+                    JOptionPane.showMessageDialog(SalleAttente.this,
+                            "La partie est complète ! Lancement du jeu...",
+                            "C'est parti !", JOptionPane.INFORMATION_MESSAGE);
+
+                    toutLeMondeEstLa();
                 }
             }
         });
         timerVerification.start();
     }
-}
+
+    private void toutLeMondeEstLa() {
+        List<String> joueurs = new ArrayList<>();
+        joueurs.add(pseudo + " (" + animal + ")");
+
+        chou_rave.FenetreDeJeu fenetre = new chou_rave.FenetreDeJeu(joueurs);
+        fenetre.demarrer();
+        dispose();
+    }
+ } // <-- cette accolade ferme la classe SalleAttente
+
+
 
 /**
  * Composant graphique créant un "rond qui tourne" pour faire patienter.

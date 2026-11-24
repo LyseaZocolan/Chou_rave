@@ -14,6 +14,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
+import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -32,8 +33,9 @@ public class FenetreDeJeu extends JFrame implements ActionListener, KeyListener 
     private Timer timer;
     private JLabel jLabel1;
     private Avatar monAvatar;
+    private List<String> joueurs;
 
-    public FenetreDeJeu() {
+    public FenetreDeJeu(List<String> joueurs) {
         // initialisation de la fenetre
         this.setTitle("TileMupping");
         this.setSize(1600, 1024);
@@ -50,6 +52,7 @@ public class FenetreDeJeu extends JFrame implements ActionListener, KeyListener 
         this.contexteBuffer = this.buffer.createGraphics();
 
         // Creation du jeu
+        this.joueurs = joueurs;
         this.jeu = new Jeu3();
         
         this.addKeyListener(this);
@@ -57,6 +60,10 @@ public class FenetreDeJeu extends JFrame implements ActionListener, KeyListener 
 
         // Creation du Timer qui appelle this.actionPerformed() tous les 40 ms
         this.timer = new Timer(40, this);
+    }
+    public void demarrer() {
+        this.setVisible(true);
+        this.requestFocusInWindow();
         this.timer.start();
     }
 

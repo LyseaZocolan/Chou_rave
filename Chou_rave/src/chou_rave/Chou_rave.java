@@ -8,6 +8,7 @@ import ig.EcranAccueil;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import javax.swing.SwingUtilities;
 
 /**
  *
@@ -21,7 +22,11 @@ public class Chou_rave {
     public static void main(String[] args) {
         // TODO code application logic here
         
-        EcranAccueil ecran = new EcranAccueil();
+        SwingUtilities.invokeLater(() -> new EcranAccueil().setVisible(true));
+        
+        
+        SwingUtilities.invokeLater(() -> new EcranAccueil().setVisible(true));
+    
         
         
 //        
