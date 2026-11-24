@@ -34,7 +34,7 @@ public class Carte {
         this.tailleTuile = 32;
         
         // 2. Chargement de l'image (le tileset) - C'est la ligne qui a disparu !
-        BufferedImage tileset = ImageIO.read(getClass().getResource("tileset(4).png"));
+        BufferedImage tileset = ImageIO.read(getClass().getResource("/ig/tileset(4).png"));
             
             // Nombre de colonnes de tuiles dans ton image tileset(4).png (ajuste si nécessaire)
             int nbColonnesTileset = 6; 
