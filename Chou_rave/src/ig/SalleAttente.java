@@ -40,7 +40,8 @@ public class SalleAttente extends JFrame implements ActionListener {
 
     private String pseudo;
     private String personnage;
-
+    private String perso;
+    
     private String cheminFond = "/resources/Fond Interface Graphique.jpg";
 
     private DefaultListModel<String> modeleJoueurs;
@@ -49,9 +50,10 @@ public class SalleAttente extends JFrame implements ActionListener {
     private JButton btnRetour;
     private JButton btnLancer;
 
-    public SalleAttente(String pseudo, String personnage) {
+    public SalleAttente(String pseudo, String perso) {
+        this.perso = perso;
+        this.personnage = perso;
         this.pseudo = pseudo;
-        this.personnage = personnage;
 
         setTitle("De la Terre à l'Assiette - Salle d'attente");
         setSize(800, 550);
@@ -215,7 +217,7 @@ public class SalleAttente extends JFrame implements ActionListener {
                 }
 
                 // On crée la fenêtre de jeu et on appelle demarrer() (indispensable pour le Timer et le clavier)
-                FenetreDeJeu fenetreJeu = new FenetreDeJeu(listeNomsJoueurs);
+                FenetreDeJeu fenetreJeu = new FenetreDeJeu(perso);
                 fenetreJeu.demarrer();
                 this.dispose(); // Ferme la salle d'attente
             }

@@ -20,13 +20,14 @@ import javax.imageio.ImageIO;
 import java.awt.Rectangle;
 
 public class Avatar {
-    private double x, y;
+    double x;
+    double y;
     private BufferedImage sprite;
     private boolean toucheGauche, toucheDroite, toucheHaut, toucheBas;
-    private double vitesse = 5.0;
+    protected double vitesse = 5.0;
     private Avatar monAvatar;
-    private double largeur = 32.0;
-    private double hauteur = 32.0;
+    protected double largeur = 32.0;
+    protected double hauteur = 32.0;
     private String pseudo;
     private int score;
 

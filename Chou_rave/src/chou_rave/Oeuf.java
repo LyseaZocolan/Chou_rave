@@ -13,10 +13,10 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
 public class Oeuf {
-    private double x, y;
-    private int largeur = 16;
-    private int hauteur = 20;
-    private boolean actif = true;
+    protected double x, y;
+    protected int largeur = 16;
+    protected int hauteur = 20;
+    protected boolean actif = true;
 
     public Oeuf(double x, double y) {
         this.x = x;

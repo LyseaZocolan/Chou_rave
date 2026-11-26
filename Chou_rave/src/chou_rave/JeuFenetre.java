@@ -22,7 +22,7 @@ import javax.swing.Timer;
  */
 public class JeuFenetre extends JFrame {
 
-    private static List<JeuFermier> listeFermiers;
+    public static List<JeuFermier> listeFermiers = new ArrayList<>();
     private Carte carteJeu;
 
     public JeuFenetre() {

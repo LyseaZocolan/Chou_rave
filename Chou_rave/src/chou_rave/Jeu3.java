@@ -8,6 +8,7 @@ package chou_rave;
  *
  * @author ariou
  */
+import static chou_rave.JeuFenetre.listeFermiers;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.awt.Rectangle;
@@ -24,16 +25,24 @@ public class Jeu3 {
     private Terrier monTerrier;
     private ArrayList<Nourriture> listeNourriture;
      
-    public Jeu3() {        
-        this.carte = new Carte("carte(5).txt");
-        this.monAvatar = new Avatar();
-        this.monTerrier = new Terrier();
-        this.listeNourriture = new ArrayList<>();
-        
-        for (int i=0; i < 8; i++){
-            this.listeNourriture.add(new Nourriture());
-        }
+    public Jeu3(String nomAnimal) {
+    this.carte = new Carte("carte(5).txt");
+    this.monTerrier = new Terrier();
+    this.listeNourriture = new ArrayList<>();
+
+    switch (nomAnimal) {
+        case "Poule":    this.monAvatar = new Poule();    break;
+        case "Sanglier": this.monAvatar = new Sanglier(); break;
+        case "Renard":   this.monAvatar = new Renard();   break;
+        case "Taupe":    this.monAvatar = new Taupe();    break;
+        case "Lapin":    this.monAvatar = new Lapin();    break;
+        default:         this.monAvatar = new Lapin();    break;
     }
+
+    for (int i = 0; i < 8; i++) {
+        this.listeNourriture.add(new Nourriture());
+    }
+}
 
     public void miseAJour() {
         this.carte.miseAJour();
@@ -123,13 +132,5 @@ public class Jeu3 {
         return this.monAvatar;
     }
 
-    // Exemple selon le choix du joueur :
-    switch (nomAnimal) {
-        case "Poule":    this.monAvatar = new Poule(); break;
-        case "Sanglier": this.monAvatar = new Sanglier(); break;
-        case "Renard":   this.monAvatar = new Renard(); break;
-        case "Taupe":    this.monAvatar = new Taupe(); break;
-        case "Lapin":    this.monAvatar = new Lapin(); break;
-        default:         this.monAvatar = new Lapin(); break;
-}
+    
 }

@@ -10,6 +10,7 @@ package chou_rave;
  */
 
 import java.awt.Image;
+import java.awt.geom.Rectangle2D;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -160,6 +161,10 @@ public class JeuFermier {
             return 0.3; // Vitesse divisée par ~3 à cause de l'œuf
         }
         return 1.0; // Vitesse normale
+    }
+
+    Rectangle2D getHitbox() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }
 

@@ -26,7 +26,7 @@ public class Lapin extends Avatar {
     @Override
     protected void dessinerApparence(Graphics2D contexte) {
         // Petit cercle d'eau autour du lapin quand il nage
-        if (estDansEau(this.x, this.y)) {
+       if (estDansEau(this.x, this.y)) {
             contexte.setColor(new Color(0, 180, 255, 130));
             contexte.fillOval((int) x - 4, (int) y + 12, (int) largeur + 8, (int) hauteur - 10);
         }

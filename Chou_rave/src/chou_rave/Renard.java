@@ -12,8 +12,8 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 public class Renard extends Avatar {
-    private final double vitesseBase = 6.0;    // Plus rapide que les autres (5.0)
-    private final double vitesseSprint = 10.0; // Vitesse pendant le sprint
+    protected final double vitesseBase = 6.0;    // Plus rapide que les autres (5.0)
+    protected final double vitesseSprint = 10.0; // Vitesse pendant le sprint
 
     public Renard() {
         super("/Images/Renard.png");

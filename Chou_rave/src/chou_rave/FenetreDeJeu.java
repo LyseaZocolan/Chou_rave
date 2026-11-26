@@ -35,7 +35,7 @@ public class FenetreDeJeu extends JFrame implements ActionListener, KeyListener 
     private Avatar monAvatar;
     private List<String> joueurs;
 
-    public FenetreDeJeu(List<String> joueurs) {
+    public FenetreDeJeu(String nomAnimal) {
         // initialisation de la fenetre
         this.setTitle("TileMupping");
         this.setSize(1600, 1024);
@@ -53,7 +53,7 @@ public class FenetreDeJeu extends JFrame implements ActionListener, KeyListener 
 
         // Creation du jeu
         this.joueurs = joueurs;
-        this.jeu = new Jeu3();
+        this.jeu = new Jeu3(nomAnimal);
         
         this.addKeyListener(this);
         this.setFocusable(true);
