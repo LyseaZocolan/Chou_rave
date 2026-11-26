@@ -9,190 +9,177 @@ package ig;
  * @author ntessier
  */
 
-import chou_rave.FenetreDeJeu;
-import java.awt.BasicStroke;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-import java.awt.RenderingHints;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.awt.Image;
-import java.util.ArrayList;
-import java.util.List;
-import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
+import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
-import javax.swing.SwingUtilities;
-import javax.swing.Timer;
 
-/**
- * Écran de la Salle d'attente
- * Développé par le PO
- */
-public class SalleAttente extends JFrame {
+public class SalleAttente extends JFrame implements ActionListener {
 
-    private JLabel lblStatut;
-    private Timer timerVerification;
     private String pseudo;
-    private String animal;
+    private String personnage;
 
-    // Constructeur qui récupère le pseudo et l'animal du joueur depuis l'écran d'accueil
-    public SalleAttente(String pseudo, String animal) {
+    private String cheminFond = "/resources/Fond Interface Graphique.jpg";
+
+    private DefaultListModel<String> modeleJoueurs;
+    private JList<String> listeJoueurs;
+    private JButton btnRetour;
+    private JButton btnLancer;
+
+    public SalleAttente(String pseudo, String personnage) {
         this.pseudo = pseudo;
-        this.animal = animal;
-    
-        setTitle("Salle d'attente - De la Terre à l'Assiette");
-        setSize(600, 500);
+        this.personnage = personnage;
+
+        setTitle("De la Terre à l'Assiette - Salle d'attente");
+        setSize(800, 550);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null); // Centrer à l'écran
+        setLocationRelativeTo(null);
         setResizable(false);
 
-        // 1. Panneau principal avec l'image de fond absolue
-        PanneauFondLobby mainPanel = new PanneauFondLobby("Z:\\Desktop\\Info_Projet\\Chou_rave\\Image Interface\\Fond Interface Graphique.jpg");
-        mainPanel.setLayout(new GridBagLayout()); // Idéal pour tout centrer
+        PanneauFondLobby mainPanel = new PanneauFondLobby(cheminFond);
+        mainPanel.setLayout(new BorderLayout(15, 15));
+        mainPanel.setBorder(BorderFactory.createEmptyBorder(20, 25, 20, 25));
 
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(15, 15, 15, 15);
-        gbc.gridx = 0;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.anchor = GridBagConstraints.CENTER;
-
-        // 2. Texte principal "Salle d'attente"
-        JLabel lblTitre = new JLabel("Salle d'attente", SwingConstants.CENTER);
-        lblTitre.setFont(new Font("Arial", Font.BOLD, 45));
+        // 1. En-tête
+        JLabel lblTitre = new JLabel("SALLE D'ATTENTE", SwingConstants.CENTER);
+        lblTitre.setFont(new Font("Arial", Font.BOLD, 32));
         lblTitre.setForeground(Color.WHITE);
-        
-        // Texte récapitulatif du joueur
-        JLabel lblJoueur = new JLabel("En attente des autres joueurs pour " + pseudo + " (" + animal + ")...", SwingConstants.CENTER);
-        lblJoueur.setFont(new Font("Arial", Font.ITALIC, 16));
-        lblJoueur.setForeground(new Color(230, 230, 230));
+        lblTitre.setOpaque(true);
+        lblTitre.setBackground(new Color(0, 0, 0, 160));
+        lblTitre.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(Color.ORANGE, 2),
+                BorderFactory.createEmptyBorder(10, 10, 10, 10)
+        ));
+        mainPanel.add(lblTitre, BorderLayout.NORTH);
 
-        // 3. Petit rond qui tourne (Spinner personnalisé)
-        SpinnerChargement spinner = new SpinnerChargement();
+        // 2. Zone centrale : Profil du joueur à gauche + Liste des joueurs à droite
+        JPanel centrePanel = new JPanel(new BorderLayout(15, 0));
+        centrePanel.setOpaque(false);
 
-        // 4. Compteur de joueurs connectés
-        lblStatut = new JLabel("Joueurs connectés : 1 / 4", SwingConstants.CENTER);
-        lblStatut.setFont(new Font("Arial", Font.BOLD, 20));
-        lblStatut.setForeground(Color.YELLOW);
+        // Panneau récapitulatif du joueur (avec son image depuis resources)
+        JPanel profilPanel = new JPanel(new BorderLayout(10, 10));
+        profilPanel.setBackground(new Color(0, 0, 0, 170));
+        profilPanel.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(Color.ORANGE, 2),
+                BorderFactory.createEmptyBorder(15, 15, 15, 15)
+        ));
+        profilPanel.setPreferredSize(new Dimension(240, 0));
 
-        // Ajout des composants au centre de l'image
-        gbc.gridy = 0; mainPanel.add(lblTitre, gbc);
-        gbc.gridy = 1; mainPanel.add(lblJoueur, gbc);
-        gbc.gridy = 2; mainPanel.add(spinner, gbc);
-        gbc.gridy = 3; mainPanel.add(lblStatut, gbc);
+        JLabel lblInfoJoueur = new JLabel(
+                "<html><center>Joueur : " + pseudo + "<br>Personnage : " + personnage + "</center></html>",
+                SwingConstants.CENTER
+        );
+        lblInfoJoueur.setFont(new Font("Arial", Font.BOLD, 16));
+        lblInfoJoueur.setForeground(Color.WHITE);
+        profilPanel.add(lblInfoJoueur, BorderLayout.NORTH);
 
+        // Chargement automatique de l'image du personnage choisi (ex: /resources/Sanglier.png)
+        JLabel lblImagePerso = new JLabel();
+        lblImagePerso.setHorizontalAlignment(SwingConstants.CENTER);
+        Image imgPerso = EcranAccueil.chargerImage("/resources/" + personnage + ".png");
+        if (imgPerso != null) {
+            Image imgRedim = imgPerso.getScaledInstance(170, 220, Image.SCALE_SMOOTH);
+            lblImagePerso.setIcon(new ImageIcon(imgRedim));
+        } else {
+            lblImagePerso.setText("Image introuvable");
+            lblImagePerso.setForeground(Color.RED);
+        }
+        profilPanel.add(lblImagePerso, BorderLayout.CENTER);
+
+        centrePanel.add(profilPanel, BorderLayout.WEST);
+
+        // Panneau liste des joueurs connectés
+        JPanel lobbyPanel = new JPanel(new BorderLayout(10, 10));
+        lobbyPanel.setBackground(new Color(0, 0, 0, 170));
+        lobbyPanel.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(Color.ORANGE, 2),
+                BorderFactory.createEmptyBorder(15, 15, 15, 15)
+        ));
+
+        JLabel lblListeTitre = new JLabel("Joueurs dans la partie :", SwingConstants.LEFT);
+        lblListeTitre.setFont(new Font("Arial", Font.BOLD, 18));
+        lblListeTitre.setForeground(Color.ORANGE);
+        lobbyPanel.add(lblListeTitre, BorderLayout.NORTH);
+
+        modeleJoueurs = new DefaultListModel<>();
+        modeleJoueurs.addElement(pseudo + " (" + personnage + ") - Prêt");
+
+        listeJoueurs = new JList<>(modeleJoueurs);
+        listeJoueurs.setFont(new Font("Arial", Font.BOLD, 16));
+        listeJoueurs.setForeground(Color.WHITE);
+        listeJoueurs.setBackground(new Color(30, 30, 30));
+
+        JScrollPane scrollListe = new JScrollPane(listeJoueurs);
+        scrollListe.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
+        lobbyPanel.add(scrollListe, BorderLayout.CENTER);
+
+        JLabel lblStatut = new JLabel("En attente des autres joueurs...", SwingConstants.CENTER);
+        lblStatut.setFont(new Font("Arial", Font.ITALIC, 14));
+        lblStatut.setForeground(new Color(200, 230, 255));
+        lobbyPanel.add(lblStatut, BorderLayout.SOUTH);
+
+        centrePanel.add(lobbyPanel, BorderLayout.CENTER);
+        mainPanel.add(centrePanel, BorderLayout.CENTER);
+
+        // 3. Zone du bas : Boutons Retour et Lancer
+        JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 25, 10));
+        bottomPanel.setBackground(new Color(0, 0, 0, 180));
+        bottomPanel.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+
+        btnRetour = new JButton("CHANGER DE PERSONNAGE");
+        btnRetour.setFont(new Font("Arial", Font.BOLD, 15));
+        btnRetour.addActionListener(this);
+        bottomPanel.add(btnRetour);
+
+        btnLancer = new JButton("LANCER LA PARTIE");
+        btnLancer.setFont(new Font("Arial", Font.BOLD, 15));
+        btnLancer.addActionListener(this);
+        bottomPanel.add(btnLancer);
+
+        mainPanel.add(bottomPanel, BorderLayout.SOUTH);
         setContentPane(mainPanel);
-
-        // 5. Lancement de la vérification régulière (Timer)
-        demarrerVerificationJoueurs();
-    }
-
-    /**
-     * Utilisation d'un Timer pour vérifier toutes les secondes si les 4 joueurs sont là.
-     */
-        private void demarrerVerificationJoueurs() {
-        final int[] joueursActuels = {1};
-
-        timerVerification = new Timer(3000, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                // TODO SCRUM MASTER : Intégration JDBC
-                // SELECT COUNT(*) FROM dresseurs;
-
-                // --- SIMULATION POUR LE TEST VISUEL ---
-                if (joueursActuels[0] < 4) {
-                    joueursActuels[0]++;
-                    lblStatut.setText("Joueurs connectés : " + joueursActuels[0] + " / 4");
-                }
-
-                // Quand les 4 joueurs sont là
-                if (joueursActuels[0] >= 4) {
-                    timerVerification.stop();
-
-                    JOptionPane.showMessageDialog(SalleAttente.this,
-                            "La partie est complète ! Lancement du jeu...",
-                            "C'est parti !", JOptionPane.INFORMATION_MESSAGE);
-
-                    toutLeMondeEstLa();
-                }
-            }
-        });
-        timerVerification.start();
-    }
-
-    private void toutLeMondeEstLa() {
-        List<String> joueurs = new ArrayList<>();
-        joueurs.add(pseudo + " (" + animal + ")");
-
-        chou_rave.FenetreDeJeu fenetre = new chou_rave.FenetreDeJeu(joueurs);
-        fenetre.demarrer();
-        dispose();
-    }
- } // <-- cette accolade ferme la classe SalleAttente
-
-
-
-/**
- * Composant graphique créant un "rond qui tourne" pour faire patienter.
- */
-class SpinnerChargement extends JPanel {
-    private int angle = 0;
-
-    public SpinnerChargement() {
-        setOpaque(false); // Fond transparent
-        setPreferredSize(new Dimension(80, 80));
-
-        // Timer très rapide (50ms) pour fluidifier l'animation de rotation
-        Timer timerAnimation = new Timer(50, e -> {
-            angle -= 15; // Fait tourner le cercle
-            if (angle <= -360) angle = 0;
-            repaint(); // Redessine le composant
-        });
-        timerAnimation.start();
     }
 
     @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        Graphics2D g2d = (Graphics2D) g;
-        // Lissage des bords du cercle
-        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        
-        g2d.setColor(Color.WHITE);
-        g2d.setStroke(new BasicStroke(6)); // Épaisseur du trait
-        
-        // Arc de cercle (pas complet, pour voir la rotation)
-        g2d.drawArc(10, 10, 60, 60, angle, 280); 
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == btnRetour) {
+            SelectionPersonnage selection = new SelectionPersonnage();
+            selection.setVisible(true);
+            this.dispose();
+        } else if (e.getSource() == btnLancer) {
+            // Remplace ce message par l'ouverture de votre fenêtre de jeu (ex: new FenetreDeJeu()...)
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Lancement de la partie pour " + pseudo + " (" + personnage + ") !",
+                    "Démarrage",
+                    JOptionPane.INFORMATION_MESSAGE
+            );
+        }
     }
 }
 
-/**
- * Recopie de la classe PanneauFond pour la salle d'attente (Chemin absolu).
- */
 class PanneauFondLobby extends JPanel {
     private Image imageFond;
 
-    public PanneauFondLobby(String cheminAbsolu) {
-        try {
-            File fichierImage = new File(cheminAbsolu); 
-            if(fichierImage.exists()) {
-                imageFond = ImageIO.read(fichierImage); 
-            }
-        } catch (Exception e) {
-            System.err.println("Image introuvable");
-        }
+    public PanneauFondLobby(String cheminRessource) {
+        this.imageFond = EcranAccueil.chargerImage(cheminRessource);
     }
 
     @Override

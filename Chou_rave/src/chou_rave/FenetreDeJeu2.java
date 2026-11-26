@@ -33,7 +33,7 @@ public class FenetreDeJeu2 extends JFrame implements ActionListener, KeyListener
     private JLabel jLabel1;
     private Avatar monAvatar;
 
-    public FenetreDeJeu2) {
+    public FenetreDeJeu2() {
         // initialisation de la fenetre
         this.setTitle("TileMupping");
         this.setSize(1600, 1024);

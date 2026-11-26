@@ -10,38 +10,33 @@ package ig;
  */
 
 
-import chou_rave.JoueurSql;
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.net.URL;
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 
 public class EcranAccueil extends JFrame implements ActionListener {
 
     private JButton btnJouer;
     private JButton btnQuitter;
-    private JTextField txtPseudo;
-    private JoueurSql bdd = new JoueurSql();
 
-    // TODO : Modifiez ces chemins avec ceux de votre ordinateur
-    private String cheminFond = "Z:\\Desktop\\VERT\\Info_Projet\\Images\\Ecran accueil.jpg";
-    private String cheminBoutonJouer = "Z:\\Desktop\\VERT\\Info_Projet\\Images\\Bouton Jouer.png";
-    private String cheminBoutonQuitter = "Z:\\Desktop\\VERT\\Info_Projet\\Images\\Bouton Quitter.png";
+    // Si tu veux ton image "Chou-Rave!", remplace par "/resources/Ecran accueil.jpg"
+    private String cheminFond = "/resources/Ecran accueil.jpg";
+    private String cheminBoutonJouer = "/resources/Bouton Jouer.png";
+    private String cheminBoutonQuitter = "/resources/Bouton Quitter.png";
 
     public EcranAccueil() {
         setTitle("De la Terre à l'Assiette - Accueil");
@@ -50,61 +45,63 @@ public class EcranAccueil extends JFrame implements ActionListener {
         setLocationRelativeTo(null);
         setResizable(false);
 
-        // Fond d'écran
         PanneauFond mainPanel = new PanneauFond(cheminFond);
         mainPanel.setLayout(new BorderLayout(10, 10));
-        mainPanel.setBorder(BorderFactory.createEmptyBorder(50, 20, 10, 20));
+        mainPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 15, 20));
 
-        
-
-        JPanel headerPanel = new JPanel(new BorderLayout());
-        headerPanel.setOpaque(false);
-        mainPanel.add(headerPanel, BorderLayout.NORTH);
-
-        // Panneau des boutons au centre/bas
-        JPanel buttonPanel = new JPanel();
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 0));
         buttonPanel.setOpaque(false);
-        
+
         btnJouer = creerBoutonImage(cheminBoutonJouer, "JOUER");
         btnJouer.addActionListener(this);
         buttonPanel.add(btnJouer);
-        
+
         btnQuitter = creerBoutonImage(cheminBoutonQuitter, "QUITTER");
         btnQuitter.addActionListener(this);
         buttonPanel.add(btnQuitter);
-        
+
         mainPanel.add(buttonPanel, BorderLayout.SOUTH);
         setContentPane(mainPanel);
     }
 
     /**
-     * Méthode pour créer un bouton à partir d'une image stockée sur le disque
+     * Charge une image depuis le package resources (marche sur tous les PC,
+     * même sans Clean and Build préalable).
      */
-    private JButton creerBoutonImage(String cheminAbsolu, String texteSecours) {
-        JButton bouton = new JButton();
+    public static Image chargerImage(String cheminRessource) {
         try {
-            File fichierImg = new File(cheminAbsolu);
-            if (fichierImg.exists()) {
-                Image img = ImageIO.read(fichierImg);
-                
-                // Redimensionnement de l'image du bouton (Largeur 200, Hauteur 60)
-                Image imgRedimensionnee = img.getScaledInstance(200, 60, Image.SCALE_SMOOTH); 
-                
-                bouton.setIcon(new ImageIcon(imgRedimensionnee));
-                bouton.setContentAreaFilled(false);
-                bouton.setBorderPainted(false);
-                bouton.setFocusPainted(false);
-                bouton.setOpaque(false);
-            } else {
-                // Si l'image n'est pas trouvée, on met du texte classique
-                bouton.setText(texteSecours); 
-                bouton.setFont(new Font("Arial", Font.BOLD, 20));
+            // 1. Méthode standard (quand le projet est compilé / en JAR)
+            URL urlImg = EcranAccueil.class.getResource(cheminRessource);
+            if (urlImg != null) {
+                return ImageIO.read(urlImg);
+            }
+            // 2. Secours en chemin relatif dans le dossier src du projet
+            File fichierLocal = new File("src" + cheminRessource);
+            if (fichierLocal.exists()) {
+                return ImageIO.read(fichierLocal);
             }
         } catch (Exception e) {
-            bouton.setText(texteSecours); 
+            System.err.println("Erreur chargement image : " + cheminRessource);
+        }
+        System.err.println("Image introuvable : " + cheminRessource);
+        return null;
+    }
+
+    private JButton creerBoutonImage(String cheminRessource, String texteSecours) {
+        JButton bouton = new JButton();
+        Image img = chargerImage(cheminRessource);
+        if (img != null) {
+            Image imgRedimensionnee = img.getScaledInstance(200, 60, Image.SCALE_SMOOTH);
+            bouton.setIcon(new ImageIcon(imgRedimensionnee));
+            bouton.setContentAreaFilled(false);
+            bouton.setBorderPainted(false);
+            bouton.setFocusPainted(false);
+            bouton.setOpaque(false);
+        } else {
+            bouton.setText(texteSecours);
             bouton.setFont(new Font("Arial", Font.BOLD, 20));
         }
-        bouton.setPreferredSize(new Dimension(200, 60)); 
+        bouton.setPreferredSize(new Dimension(200, 60));
         return bouton;
     }
 
@@ -112,10 +109,10 @@ public class EcranAccueil extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == btnJouer) {
             SelectionPersonnage selection = new SelectionPersonnage();
-            selection.setVisible(true); 
-            this.dispose(); 
+            selection.setVisible(true);
+            this.dispose();
         } else if (e.getSource() == btnQuitter) {
-            System.exit(0); // Ferme complètement le programme
+            System.exit(0);
         }
     }
 
@@ -124,21 +121,11 @@ public class EcranAccueil extends JFrame implements ActionListener {
     }
 }
 
-/**
- * Classe interne pour gérer l'image de fond
- */
 class PanneauFond extends JPanel {
     private Image imageFond;
 
-    public PanneauFond(String cheminAbsoluImage) {
-        try {
-            File fichierImage = new File(cheminAbsoluImage);
-            if(fichierImage.exists()) {
-                imageFond = ImageIO.read(fichierImage); 
-            }
-        } catch (Exception e) {
-            System.err.println("Erreur image de fond : " + e.getMessage());
-        }
+    public PanneauFond(String cheminRessource) {
+        this.imageFond = EcranAccueil.chargerImage(cheminRessource);
     }
 
     @Override
