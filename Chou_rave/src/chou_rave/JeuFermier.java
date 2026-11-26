@@ -10,7 +10,9 @@ package chou_rave;
  */
 
 import java.awt.Image;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -21,14 +23,38 @@ import javax.imageio.ImageIO;
 public class JeuFermier {
     JeuCoordonnees position; 
     Image imageFermier;
+    private int[][] grilleCarte; // 32 lignes (y) x 50 colonnes (x)
     
     public JeuFermier(int x, int y, String nomFichierImage){
         this.position = new JeuCoordonnees(x, y);
         
         try {
-            // nomFichierImage par exemple "/resources/fermier1.png"
             this.imageFermier = ImageIO.read(getClass().getResource(nomFichierImage));
         } catch (IOException ex) {
+            Logger.getLogger(JeuFermier.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        chargerCarte();
+    }
+    
+    // Lecture simple de carte(5).txt (50 colonnes x 32 lignes)
+    private void chargerCarte() {
+        this.grilleCarte = new int[32][50];
+        try {
+            BufferedReader lecteur = new BufferedReader(
+                new InputStreamReader(getClass().getResourceAsStream("carte(5).txt"))
+            );
+            for (int y = 0; y < 32; y++) {
+                String ligne = lecteur.readLine();
+                if (ligne != null) {
+                    String[] cases = ligne.trim().split("\\s+");
+                    for (int x = 0; x < 50 && x < cases.length; x++) {
+                        grilleCarte[y][x] = Integer.parseInt(cases[x]);
+                    }
+                }
+            }
+            lecteur.close();
+        } catch (Exception ex) {
             Logger.getLogger(JeuFermier.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -56,33 +82,26 @@ public class JeuFermier {
         }
     }
     
-    // FONCTION QUI DÉFINIT LES OBSTACLES SELON LA MATRICE DE LA MAP (50x32)
+    // Fonction qui définit les obstacles selon a matrice de la map (50x32)
     private boolean estUnObstacle(int x, int y) {
-        // 1. Limites de la carte (x de 0 à 49, y de 0 à 31)
+        // Limites de la carte (x de 0 à 49, y de 0 à 31)
         if (x < 0 || x >= 50 || y < 0 || y >= 32) {
             return true;
         }
         
-        // 2. La forêt / arbres en haut (y de 0 à 7 environ)
-        if (y <= 7 && x <= 22) {
+        int numTuile = grilleCarte[y][x];
+        
+        // La rivière (tous les numéros 6 dans carte(5).txt)
+        if (numTuile == 6) {
             return true;
         }
         
-        // 3. La rivière horizontale (y entre 11 et 14 environ)
-        if (y >= 11 && y <= 14) {
-            // Sauf sur le pont (vers x = 16 ou 17 d'après la matrice)
-            if (x >= 16 && x <= 17) {
-                return false; // Le pont est franchissable !
-            }
-            return true; // Le reste de la rivière bloque
-        }
-        
-        // 4. La maison et le potager en bas à droite (vers la fin de la matrice)
-        if (x >= 21 && y >= 20) {
+        // La forêt (tuiles 3, 4, 5 dans la partie forêt en haut)
+        if (y <= 9 && (numTuile == 3 || numTuile == 4 || numTuile == 5)) {
             return true;
         }
         
-        // Sinon, la case est libre !
+        // Sinon, la case est libre
         return false;
     }
 
@@ -113,6 +132,34 @@ public class JeuFermier {
             if (this.position.getY() < 0) this.position.setY(0);
             if (this.position.getY() > 31) this.position.setY(31);
         }
+    }
+    
+    private int compteurRalentissement = 0; // Pour les œufs de la Poule
+    private int compteurEtourdi = 0;        // Pour l'attaque du Sanglier
+
+    public void ralentir(int dureeFrames) {
+        this.compteurRalentissement = dureeFrames; // ex: 100 frames = 4 secondes
+    }
+
+    public void etourdir(int dureeFrames) {
+        this.compteurEtourdi = dureeFrames; // ex: 75 frames = 3 secondes
+    }
+
+    public boolean estEtourdi() {
+        return this.compteurEtourdi > 0;
+    }
+
+    // À appeler au début du déplacement / miseAJour() du fermier :
+    public double getMultiplicateurVitesse() {
+        if (compteurEtourdi > 0) {
+            compteurEtourdi--;
+            return 0.0; // Fermier immobilisé par le Sanglier
+        }
+        if (compteurRalentissement > 0) {
+            compteurRalentissement--;
+            return 0.3; // Vitesse divisée par ~3 à cause de l'œuf
+        }
+        return 1.0; // Vitesse normale
     }
 }
 

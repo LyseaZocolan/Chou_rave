@@ -95,6 +95,9 @@ public class FenetreDeJeu extends JFrame implements ActionListener, KeyListener 
         if (evt.getKeyCode() == KeyEvent.VK_R) { 
             this.jeu.essayerDeposerNourriture(); 
         }
+        if (evt.getKeyCode() == KeyEvent.VK_SPACE) {
+            this.jeu.getAvatar().activerPouvoir();
+}
     }
     
     @Override

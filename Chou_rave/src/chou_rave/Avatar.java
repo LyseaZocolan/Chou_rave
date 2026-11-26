@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO; 
+import java.awt.Rectangle;
 
 public class Avatar {
     private double x, y;
@@ -30,16 +31,16 @@ public class Avatar {
     private int score;
 
     // Nouvelles caractéristiques pour la survie
-    private double enduranceMax = 1000.0;
-    private double enduranceActuelle;
+    protected double enduranceMax = 1000.0;
+    protected double enduranceActuelle;
     
     // Inventaire
-    private int capaciteSac = 3;
-    private ArrayList<String> inventaire;
+    protected int capaciteSac = 3;
+    protected ArrayList<String> inventaire;
     
-    private int viesMax = 3;
-    private int vies = 3;
-    private int compteurInvincibilite = 0; 
+    protected int viesMax = 3;
+    protected int vies = 3;
+    protected int compteurInvincibilite = 0; 
     
     protected int dureePouvoir = 0;
     protected int tempsRecharge = 0;
@@ -47,7 +48,7 @@ public class Avatar {
     
 
     public Avatar() {
-        this("/Images/Lapin.png");
+        this("/resources/Lapin.png");
     }
 
     // Constructeur utilisé par les 5 animaux
@@ -154,7 +155,7 @@ public class Avatar {
 
         // Limites de la carte
         if (x < 0) x = 0;
-        if (x > 1024) x = 1024; 
+        if (x > 1600) x = 1600; 
         if (y < 0) y = 0;
         if (y > 1024) y = 1024; 
     }
@@ -255,6 +256,10 @@ public class Avatar {
     public void setToucheDroite(boolean etat) { this.toucheDroite = etat; }
     public void setToucheHaut(boolean etat) { this.toucheHaut = etat; }
     public void setToucheBas(boolean etat) { this.toucheBas = etat; }
+    
+    public Rectangle getHitbox() {
+    return new Rectangle((int) this.x, (int) this.y, (int) this.largeur, (int) this.hauteur);
+    }
     
     public double getLargeur() { return 30.0; }
     public double getHauteur() {return 30.0; }

@@ -10,6 +10,7 @@ package chou_rave;
  */
 import java.awt.Graphics2D;
 import java.util.ArrayList;
+import java.awt.Rectangle;
 
 /**
  * Exemple de classe jeu
@@ -53,6 +54,43 @@ public class Jeu3 {
                 this.listeNourriture.add(new Nourriture());
             }
         }
+        
+        // 1. Si l'avatar est une Poule, vérifier si un fermier marche sur un œuf
+        if (this.monAvatar instanceof Poule) {
+            Poule poule = (Poule) this.monAvatar;
+            for (Oeuf oeuf : poule.getOeufs()) {
+                if (oeuf.isActif()) {
+                    for (JeuFermier fermier : listeFermiers) {
+                        if (oeuf.getHitbox().intersects(fermier.getHitbox())) {
+                            fermier.ralentir(100); // Ralentit largement pendant 4s
+                            oeuf.desactiver();     // L'œuf est écrasé
+                            System.out.println("Un fermier a glissé sur un œuf !");
+                        }
+                    }
+                }
+            }
+        }
+
+        // 2. Collisions entre l'avatar et les fermiers
+        for (JeuFermier fermier : listeFermiers) {
+            if (fermier.estEtourdi()) {
+                continue; // Un fermier assommé ne peut pas blesser le joueur
+            }
+
+            if (this.monAvatar.getHitbox().intersects(fermier.getHitbox())) {
+                if (this.monAvatar.estInvisible()) {
+                    // La Taupe sous terre passe sans être détectée
+                    continue;
+                } else if (this.monAvatar.estEnAttaque()) {
+                    // Le Sanglier en charge assomme le fermier
+                    fermier.etourdir(75);
+                    System.out.println("Le sanglier a percuté un fermier !");
+                } else {
+                    // Contact normal : l'avatar perd une vie
+                    this.monAvatar.perdreVie();
+                }
+            }
+        }
     }
 
     public void essayerDeposerNourriture() {
@@ -85,4 +123,13 @@ public class Jeu3 {
         return this.monAvatar;
     }
 
+    // Exemple selon le choix du joueur :
+    switch (nomAnimal) {
+        case "Poule":    this.monAvatar = new Poule(); break;
+        case "Sanglier": this.monAvatar = new Sanglier(); break;
+        case "Renard":   this.monAvatar = new Renard(); break;
+        case "Taupe":    this.monAvatar = new Taupe(); break;
+        case "Lapin":    this.monAvatar = new Lapin(); break;
+        default:         this.monAvatar = new Lapin(); break;
+}
 }
