@@ -181,7 +181,8 @@ public class Avatar {
         this.inventaire.clear(); // Vide le sac
     }
     
-     public void perdreNourriture() {
+
+    public void perdreNourriture() {
         this.inventaire.clear(); // Vide tout le sac si le fermier repère l'avatar
     }
 
