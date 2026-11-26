@@ -114,6 +114,34 @@ public class JeuFermier {
             if (this.position.getY() > 31) this.position.setY(31);
         }
     }
+    
+    private int compteurRalentissement = 0; // Pour les œufs de la Poule
+    private int compteurEtourdi = 0;        // Pour l'attaque du Sanglier
+
+    public void ralentir(int dureeFrames) {
+        this.compteurRalentissement = dureeFrames; // ex: 100 frames = 4 secondes
+    }
+
+    public void etourdir(int dureeFrames) {
+        this.compteurEtourdi = dureeFrames; // ex: 75 frames = 3 secondes
+    }
+
+    public boolean estEtourdi() {
+        return this.compteurEtourdi > 0;
+    }
+
+    // À appeler au début du déplacement / miseAJour() du fermier :
+    public double getMultiplicateurVitesse() {
+        if (compteurEtourdi > 0) {
+            compteurEtourdi--;
+            return 0.0; // Fermier immobilisé par le Sanglier
+        }
+        if (compteurRalentissement > 0) {
+            compteurRalentissement--;
+            return 0.3; // Vitesse divisée par ~3 à cause de l'œuf
+        }
+        return 1.0; // Vitesse normale
+    }
 }
 
     
