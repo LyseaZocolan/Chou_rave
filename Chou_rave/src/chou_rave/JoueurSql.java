@@ -9,8 +9,8 @@ package chou_rave;
  * @author lzocolan
  */
 import java.sql.*;
-import outils.OutilsJDBC;
-import moteur.Joueur;
+
+
 
 public class JoueurSql {
     private String adresseBase;

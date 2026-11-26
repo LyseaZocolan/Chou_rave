@@ -112,9 +112,7 @@ public class FenetreDeJeu extends JFrame implements ActionListener, KeyListener 
     /**
      * @param args the command line argumentss
      */
-    public static void main(String[] args) {
-        FenetreDeJeu fenetre = new FenetreDeJeu();
-        fenetre.setVisible(true);
-    }
+
+    
 
 }
