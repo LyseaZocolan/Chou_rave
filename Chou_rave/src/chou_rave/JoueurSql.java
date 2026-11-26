@@ -11,7 +11,6 @@ package chou_rave;
 import java.sql.*;
 
 
-
 public class JoueurSql {
     private String adresseBase;
     private String user;
