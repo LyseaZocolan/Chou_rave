@@ -79,7 +79,7 @@ public class JeuFenetre extends JFrame {
                     g.drawImage(fermier.imageFermier,
                             fermier.position.getX() * tailleTuile,
                             fermier.position.getY() * tailleTuile,
-                            tailleTuile * 4, tailleTuile * 4, // Agrandi x2 (64x64)
+                            tailleTuile * 4, tailleTuile * 4, // Agrandi x2 (64x64) //tailleTuile * 4, tailleTuile * 4,
                             this);
                 } else {
                     // Carré rouge de secours si l'image n'est pas chargée
