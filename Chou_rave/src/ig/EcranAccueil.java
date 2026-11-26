@@ -35,7 +35,9 @@ public class EcranAccueil extends JFrame implements ActionListener {
     private JButton btnQuitter;
 
     // Chemins vers le package "Images" (vérifie les noms exacts et extensions)
-    private String cheminFond = "Images/Fond Interface Graphique.jpg";
+
+    private String cheminFond = "/Images/Fond Interface Graphique.jpg";
+
     private String cheminBoutonJouer = "/Images/Bouton Jouer.png";
     private String cheminBoutonQuitter = "/Images/Bouton Quitter.png";
 
