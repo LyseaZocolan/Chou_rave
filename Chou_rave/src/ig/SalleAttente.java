@@ -10,6 +10,7 @@ package ig;
  */
 
 
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -40,6 +41,7 @@ public class SalleAttente extends JFrame implements ActionListener {
 
     private DefaultListModel<String> modeleJoueurs;
     private JList<String> listeJoueurs;
+    private JLabel lblStatut;
     private JButton btnRetour;
     private JButton btnLancer;
 
@@ -121,6 +123,9 @@ public class SalleAttente extends JFrame implements ActionListener {
         modeleJoueurs = new DefaultListModel<>();
         modeleJoueurs.addElement(pseudo + " (" + personnage + ") - Prêt");
 
+        // LIGNE DE TEST : Ajoute 3 faux joueurs pour atteindre 4/4 et lancer la partie (à commenter quand le multi sera prêt)
+        ajouterJoueursTest();
+
         listeJoueurs = new JList<>(modeleJoueurs);
         listeJoueurs.setFont(new Font("Arial", Font.BOLD, 16));
         listeJoueurs.setForeground(Color.WHITE);
@@ -130,9 +135,8 @@ public class SalleAttente extends JFrame implements ActionListener {
         scrollListe.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
         lobbyPanel.add(scrollListe, BorderLayout.CENTER);
 
-        JLabel lblStatut = new JLabel("En attente des autres joueurs...", SwingConstants.CENTER);
+        lblStatut = new JLabel("", SwingConstants.CENTER);
         lblStatut.setFont(new Font("Arial", Font.ITALIC, 14));
-        lblStatut.setForeground(new Color(200, 230, 255));
         lobbyPanel.add(lblStatut, BorderLayout.SOUTH);
 
         centrePanel.add(lobbyPanel, BorderLayout.CENTER);
@@ -154,7 +158,42 @@ public class SalleAttente extends JFrame implements ActionListener {
         bottomPanel.add(btnLancer);
 
         mainPanel.add(bottomPanel, BorderLayout.SOUTH);
+
+        // Vérifie si on a bien 4 joueurs pour activer le bouton "LANCER LA PARTIE"
+        mettreAJourEtatPartie();
+
         setContentPane(mainPanel);
+    }
+
+    /**
+     * Ajoute 3 joueurs fictifs avec des personnages différents du tien pour tester le lancement.
+     */
+    private void ajouterJoueursTest() {
+        String[] tousLesPersos = {"Taupe", "Renard", "Sanglier", "Lapin", "Poule"};
+        int nbAjoutes = 0;
+        for (String p : tousLesPersos) {
+            if (!p.equalsIgnoreCase(personnage) && nbAjoutes < 3) {
+                nbAjoutes++;
+                modeleJoueurs.addElement("JoueurTest_" + nbAjoutes + " (" + p + ") - Prêt");
+            }
+        }
+    }
+
+    /**
+     * Active le bouton Lancer uniquement quand 4 joueurs sont présents dans le lobby.
+     */
+    private void mettreAJourEtatPartie() {
+        int nbJoueurs = modeleJoueurs.size();
+        boolean partieComplete = (nbJoueurs >= 4);
+
+        btnLancer.setEnabled(partieComplete);
+        if (partieComplete) {
+            lblStatut.setText("Partie complète (" + nbJoueurs + "/4) - Prêt à lancer !");
+            lblStatut.setForeground(new Color(140, 255, 140));
+        } else {
+            lblStatut.setText("En attente des autres joueurs (" + nbJoueurs + "/4)...");
+            lblStatut.setForeground(new Color(200, 230, 255));
+        }
     }
 
     @Override
@@ -164,10 +203,10 @@ public class SalleAttente extends JFrame implements ActionListener {
             selection.setVisible(true);
             this.dispose();
         } else if (e.getSource() == btnLancer) {
-            // Remplace ce message par l'ouverture de votre fenêtre de jeu (ex: new FenetreDeJeu()...)
+            // Remplace ce bloc par l'ouverture de votre fenêtre de jeu (ex: new FenetreDeJeu()...)
             JOptionPane.showMessageDialog(
                     this,
-                    "Lancement de la partie pour " + pseudo + " (" + personnage + ") !",
+                    "Lancement de la partie à " + modeleJoueurs.size() + " joueurs avec " + pseudo + " (" + personnage + ") !",
                     "Démarrage",
                     JOptionPane.INFORMATION_MESSAGE
             );
