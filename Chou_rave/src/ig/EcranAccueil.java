@@ -88,11 +88,6 @@ public class EcranAccueil extends JFrame implements ActionListener {
             if (fichierLocal.exists()) {
                 return ImageIO.read(fichierLocal);
             }
-             // 3. Chemin absolu (ancienne méthode)
-            File fichierAbsolu = new File(cheminRessource);
-            if (fichierAbsolu.exists()) {
-                return ImageIO.read(fichierAbsolu);
-            }
         } catch (Exception e) {
             System.err.println("Erreur chargement image : " + cheminRessource);
         }

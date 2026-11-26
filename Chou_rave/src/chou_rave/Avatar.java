@@ -26,6 +26,8 @@ public class Avatar {
     private Avatar monAvatar;
     private double largeur = 32.0;
     private double hauteur = 32.0;
+    private String pseudo;
+    private int score;
 
     // Nouvelles caractéristiques pour la survie
     private double enduranceMax = 1000.0;
@@ -282,24 +284,23 @@ public class Avatar {
     }
 
 
-    String getPseudo() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public String getPseudo() {
+        return pseudo;
     }
     
-    String setPseudo(String peudo) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public void setPseudo(String pseudo) {
+        this.pseudo = pseudo;
     }
 
-    int getScore() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public int getScore() {
+        return score;
     }
 
-    int getPositionX() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public int getPositionX() {
+        return (int) this.x;   // le vrai nom de l'attribut modifié par setX
     }
 
-    int getPositionY() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public int getPositionY() {
+        return (int) this.y;   // le vrai nom de l'attribut modifié par setY
     }
-
  }
