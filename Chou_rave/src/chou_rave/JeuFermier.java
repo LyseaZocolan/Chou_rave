@@ -49,6 +49,13 @@ public class JeuFermier {
         return diffX <= rayonCases && diffY <= rayonCases;
     }
     
+    // Si le fermier détecte l'avatar, l'avatar perd toute sa nourriture
+    public void penaliserAvatar(Avatar avatar, int rayonCases) {
+        if (detecteAvatar(avatar, rayonCases)) {
+            avatar.perdreNourriture();
+        }
+    }
+    
     // FONCTION QUI DÉFINIT LES OBSTACLES SELON LA MATRICE DE LA MAP (50x32)
     private boolean estUnObstacle(int x, int y) {
         // 1. Limites de la carte (x de 0 à 49, y de 0 à 31)
