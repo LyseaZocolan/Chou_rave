@@ -113,6 +113,10 @@ public class Avatar {
     public void deposerNourritureTerrier() {
         this.inventaire.clear(); // Vide le sac
     }
+    
+    public void perdreNourriture() {
+        this.inventaire.clear(); // Vide tout le sac si le fermier repère l'avatar
+    }
 
     // --- Contrôles clavier ---
     public void setToucheGauche(boolean etat) { this.toucheGauche = etat; }
