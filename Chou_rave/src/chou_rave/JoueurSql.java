@@ -18,9 +18,9 @@ public class JoueurSql {
     private String motdepasse;
     private Connection connexion; //lui c'est l'état de la connexion, autant en faire aussi un attribut.
 
-
- public JoueurSQL(){
-        this.adresseBase = "jdbc:mariadb://nemrod.ens2m.fr:3306/2024_2025_s1_vs2_tp2_fish_up";
+    
+ public JoueurSql(){
+        this.adresseBase = "jdbc:mariadb://nemrod.ens2m.fr:3306/2026_2027_s1_vs1_tp2_chou_rave";
         this.user = "etudiant";
         this.motdepasse = "YTDTvj9TR3CDYCmP";
 	
@@ -35,17 +35,15 @@ public class JoueurSql {
         }
 
     }
- 
- 
-  public void creerJoueur(Avatar J){
+ public void creerJoueur(Avatar J){
        //Voilà un exemple (va utiliser INSERT dans sa requête SQL), admettons qu'on a un Joueur J caractérisé par : son nom, son score, sa position X, sa position Y. On va ajouter cerre
 	//ligne à notre table JOUEUR !
         try {
             PreparedStatement requete = connexion.prepareStatement("INSERT INTO Joueur VALUES (?, ?, ?, ?)");
             requete.setString(1, J.getPseudo());
             requete.setInt(2, J.getScore());
-            requete.setInt(3, (int) J.getX());
-            requete.setBoolean(4, getY());
+            requete.setInt(3, J.getPositionX());
+            requete.setBoolean(4, getPositionY());
             System.out.println(requete);
             int nombreDAjouts = requete.executeUpdate();
             System.out.println(nombreDAjouts + " enregistrement(s) ajoute(s)");
@@ -54,10 +52,12 @@ public class JoueurSql {
 
         } catch (SQLException ex) {
             ex.printStackTrace();
+            
         }
 
     }
 
-    
- 
+    private boolean getPositionY() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }

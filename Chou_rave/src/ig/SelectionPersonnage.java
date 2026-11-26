@@ -9,6 +9,7 @@ package ig;
  * @author ntessier
  */
 
+import chou_rave.JoueurSql;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -33,11 +34,13 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import java.awt.Graphics;
 
+
 public class SelectionPersonnage extends JFrame implements ActionListener {
 
     private JTextField txtPseudo;
     private ButtonGroup groupeAnimaux;
     private JButton btnValider;
+    private JoueurSql bdd = new JoueurSql();
     
     // Noms des personnages 
     private String[] nomsPersonnages = {"Taupe", "Renard", "Sanglier", "Lapin", "Poule"};

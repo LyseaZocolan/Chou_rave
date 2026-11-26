@@ -10,6 +10,7 @@ package ig;
  */
 
 
+import chou_rave.JoueurSql;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -26,6 +27,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 
@@ -33,6 +35,8 @@ public class EcranAccueil extends JFrame implements ActionListener {
 
     private JButton btnJouer;
     private JButton btnQuitter;
+    private JTextField txtPseudo;
+    private JoueurSql bdd = new JoueurSql();
 
     // TODO : Modifiez ces chemins avec ceux de votre ordinateur
     private String cheminFond = "Z:\\Desktop\\VERT\\Info_Projet\\Images\\Ecran accueil.jpg";
