@@ -61,6 +61,7 @@ public class SalleAttente extends JFrame {
         // 1. Panneau principal avec l'image de fond absolue
         PanneauFondLobby mainPanel = new PanneauFondLobby("Z:\\Desktop\\Info_Projet\\Chou_rave\\Image Interface\\Fond Interface Graphique.jpg");
         mainPanel.setLayout(new GridBagLayout()); // Idéal pour tout centrer
+        
 
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(15, 15, 15, 15);
