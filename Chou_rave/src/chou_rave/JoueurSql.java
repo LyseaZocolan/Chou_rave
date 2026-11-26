@@ -34,28 +34,20 @@ public class JoueurSql {
         }
 
     }
- public void creerJoueur(Avatar J){
-       //Voilà un exemple (va utiliser INSERT dans sa requête SQL), admettons qu'on a un Joueur J caractérisé par : son nom, son score, sa position X, sa position Y. On va ajouter cerre
-	//ligne à notre table JOUEUR !
-        try {
-            PreparedStatement requete = connexion.prepareStatement("INSERT INTO Joueur VALUES (?, ?, ?, ?)");
-            requete.setString(1, J.getPseudo());
-            requete.setInt(2, J.getScore());
-            requete.setInt(3, J.getPositionX());
-            requete.setBoolean(4, getPositionY());
-            System.out.println(requete);
-            int nombreDAjouts = requete.executeUpdate();
-            System.out.println(nombreDAjouts + " enregistrement(s) ajoute(s)");
-
-            requete.close();
-
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-            
-        }
-
+ public boolean creerJoueur(Avatar a, String animal) {
+    String sql = "INSERT INTO Avatar (animal, pseudo, position_x, position_y) VALUES (?, ?, ?, ?)";
+    try (PreparedStatement requete = connexion.prepareStatement(sql)) {
+        requete.setString(1, animal);
+        requete.setString(2, a.getPseudo());
+        requete.setInt(3, a.getPositionX());
+        requete.setInt(4, a.getPositionY());
+        return requete.executeUpdate() > 0;
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+        return false;
     }
-
+}
+ 
     private boolean getPositionY() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
