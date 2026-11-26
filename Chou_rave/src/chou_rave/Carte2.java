@@ -1,2 +1,2 @@
 package chou_rave;
-public class Carte2 {
+public class Carte2 {}
