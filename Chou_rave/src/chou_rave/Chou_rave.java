@@ -25,7 +25,6 @@ public class Chou_rave {
         SwingUtilities.invokeLater(() -> new EcranAccueil().setVisible(true));
         
         
-        SwingUtilities.invokeLater(() -> new EcranAccueil().setVisible(true));
     
         
         
