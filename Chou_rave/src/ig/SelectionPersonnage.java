@@ -10,6 +10,8 @@ package ig;
  */
 
 
+import chou_rave.Avatar;
+import chou_rave.JoueurSql;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -36,6 +38,7 @@ public class SelectionPersonnage extends JFrame implements ActionListener {
     private JTextField txtPseudo;
     private ButtonGroup groupeAnimaux;
     private JButton btnValider;
+    private JoueurSql joueurSql = new JoueurSql();
 
     // Noms des personnages (utilisés pour le transfert vers la salle d'attente)
     private String[] nomsPersonnages = {"Taupe", "Renard", "Sanglier", "Lapin", "Poule"};
@@ -84,6 +87,21 @@ public class SelectionPersonnage extends JFrame implements ActionListener {
         final int[] etirementsLargeur = {20, 10, 5, 10, 20};
         final int[] decalagesY = {-8, -5, -8, -8, -8};
         final int hauteurPanneau = 220;
+        
+       
+        Avatar avatar = new Avatar();
+        avatar.setPseudo(txtPseudo);   
+        avatar.setX(0);
+        avatar.setY(0);
+
+    if (joueurSql.creerJoueur(avatar)) {
+        SalleAttente attente = new SalleAttente(pseudo, perso);
+        attente.setVisible(true);
+        this.dispose();
+    } else {
+        JOptionPane.showMessageDialog(this, "Impossible d'enregistrer le joueur.",
+            "Erreur", JOptionPane.ERROR_MESSAGE);
+    }
 
         for (int i = 0; i < 5; i++) {
             JPanel carte = new JPanel(new BorderLayout());
