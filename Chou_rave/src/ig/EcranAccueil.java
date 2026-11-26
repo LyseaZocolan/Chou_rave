@@ -28,6 +28,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+
 public class EcranAccueil extends JFrame implements ActionListener {
 
     private JButton btnJouer;
@@ -37,6 +38,11 @@ public class EcranAccueil extends JFrame implements ActionListener {
     private String cheminFond = "/resources/Ecran accueil.jpg";
     private String cheminBoutonJouer = "/resources/Bouton Jouer.png";
     private String cheminBoutonQuitter = "/resources/Bouton Quitter.png";
+    // Chemins vers le package "Images" (vérifie les noms exacts et extensions)
+
+   
+
+    
 
     public EcranAccueil() {
         setTitle("De la Terre à l'Assiette - Accueil");
@@ -47,8 +53,10 @@ public class EcranAccueil extends JFrame implements ActionListener {
 
         PanneauFond mainPanel = new PanneauFond(cheminFond);
         mainPanel.setLayout(new BorderLayout(10, 10));
+        // Le 3ème chiffre (15) gère la hauteur des boutons par rapport au bas de la fenêtre
         mainPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 15, 20));
 
+        // Panneau des boutons en bas, côte à côte
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 0));
         buttonPanel.setOpaque(false);
 
@@ -121,6 +129,9 @@ public class EcranAccueil extends JFrame implements ActionListener {
     }
 }
 
+/**
+ * Panneau de fond réutilisé par EcranAccueil et SelectionPersonnage
+ */
 class PanneauFond extends JPanel {
     private Image imageFond;
 

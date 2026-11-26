@@ -17,9 +17,9 @@ public class JoueurSql {
     private String motdepasse;
     private Connection connexion; //lui c'est l'état de la connexion, autant en faire aussi un attribut.
 
-    
+   
  public JoueurSql(){
-        this.adresseBase = "jdbc:mariadb://nemrod.ens2m.fr:3306/2026_2027_s1_vs1_tp2_chou_rave";
+        this.adresseBase = "jdbc:mariadb://nemrod.ens2m.fr:3306/2026-2027_s1_vs1_tp2_chou_rave";
         this.user = "etudiant";
         this.motdepasse = "YTDTvj9TR3CDYCmP";
 	
