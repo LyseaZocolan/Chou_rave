@@ -10,9 +10,7 @@ package chou_rave;
  */
 
 import java.awt.Image;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
-import javax.swing.ImageIcon;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -22,39 +20,39 @@ import javax.imageio.ImageIO;
 
 public class JeuFermier {
     JeuCoordonnees position; 
-    Image imageFermier; // Tu peux garder ou enlever cette ligne
-    private BufferedImage sprite;
+    Image imageFermier;
     
     public JeuFermier(int x, int y, String nomFichierImage){
         this.position = new JeuCoordonnees(x, y);
         
         try {
-            this.sprite = ImageIO.read(getClass().getClassLoader().getResource("resources/fermier1.png"));
+            // nomFichierImage par exemple "/resources/fermier1.png"
+            this.imageFermier = ImageIO.read(getClass().getResource(nomFichierImage));
         } catch (IOException ex) {
-            Logger.getLogger(Avatar.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(JeuFermier.class.getName()).log(Level.SEVERE, null, ex);
         }
-        try {
-            this.sprite = ImageIO.read(getClass().getClassLoader().getResource("resources/fermier2.png"));
-        } catch (IOException ex) {
-            Logger.getLogger(Avatar.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        try {
-            this.sprite = ImageIO.read(getClass().getClassLoader().getResource("resources/fermier13.png"));
-        } catch (IOException ex) {
-            Logger.getLogger(Avatar.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        try {
-            this.sprite = ImageIO.read(getClass().getClassLoader().getResource("resources/fermier4.png"));
-        } catch (IOException ex) {
-            Logger.getLogger(Avatar.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
     }
     
-    // FONCTION QUI DÉFINIT LES OBSTACLES SELON LA MATRICE DE LA MAP (32x32)
+    // Détecte si l'avatar est proche (rayonCases = distance en nombre de cases)
+    public boolean detecteAvatar(Avatar avatar, int rayonCases) {
+        if (avatar == null) {
+            return false;
+        }
+        
+        int tailleTuile = 32;
+        int avatarCaseX = (int) (avatar.getX() / tailleTuile);
+        int avatarCaseY = (int) (avatar.getY() / tailleTuile);
+        
+        int diffX = Math.abs(this.position.getX() - avatarCaseX);
+        int diffY = Math.abs(this.position.getY() - avatarCaseY);
+        
+        return diffX <= rayonCases && diffY <= rayonCases;
+    }
+    
+    // FONCTION QUI DÉFINIT LES OBSTACLES SELON LA MATRICE DE LA MAP (50x32)
     private boolean estUnObstacle(int x, int y) {
-        // 1. Limites de la carte (0 à 31)
-        if (x < 0 || x > 31 || y < 0 || y > 31) {
+        // 1. Limites de la carte (x de 0 à 49, y de 0 à 31)
+        if (x < 0 || x >= 50 || y < 0 || y >= 32) {
             return true;
         }
         
@@ -102,9 +100,9 @@ public class JeuFermier {
             this.position.setX(nouvellePosition.getX());
             this.position.setY(nouvellePosition.getY());
             
-            // Sécurité anti-sortie (0 à 31)
+            // Sécurité anti-sortie (0 à 49 pour X, 0 à 31 pour Y)
             if (this.position.getX() < 0) this.position.setX(0);
-            if (this.position.getX() > 31) this.position.setX(31);
+            if (this.position.getX() > 49) this.position.setX(49);
             if (this.position.getY() < 0) this.position.setY(0);
             if (this.position.getY() > 31) this.position.setY(31);
         }
