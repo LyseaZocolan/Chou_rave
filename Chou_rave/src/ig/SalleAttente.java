@@ -31,6 +31,10 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
+import java.util.ArrayList;
+import java.util.List;
+import chou_rave.FenetreDeJeu; // Remplace "chou_rave" par le nom exact du package de FenetreDeJeu
+
 
 public class SalleAttente extends JFrame implements ActionListener {
 
@@ -203,13 +207,18 @@ public class SalleAttente extends JFrame implements ActionListener {
             selection.setVisible(true);
             this.dispose();
         } else if (e.getSource() == btnLancer) {
-            // Remplace ce bloc par l'ouverture de votre fenêtre de jeu (ex: new FenetreDeJeu()...)
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Lancement de la partie à " + modeleJoueurs.size() + " joueurs avec " + pseudo + " (" + personnage + ") !",
-                    "Démarrage",
-                    JOptionPane.INFORMATION_MESSAGE
-            );
+            if (modeleJoueurs.size() >= 4) {
+                // On transforme la liste de la salle d'attente en List<String> attendue par FenetreDeJeu
+                List<String> listeNomsJoueurs = new ArrayList<>();
+                for (int i = 0; i < modeleJoueurs.size(); i++) {
+                    listeNomsJoueurs.add(modeleJoueurs.getElementAt(i));
+                }
+
+                // On crée la fenêtre de jeu et on appelle demarrer() (indispensable pour le Timer et le clavier)
+                FenetreDeJeu fenetreJeu = new FenetreDeJeu(listeNomsJoueurs);
+                fenetreJeu.demarrer();
+                this.dispose(); // Ferme la salle d'attente
+            }
         }
     }
 }

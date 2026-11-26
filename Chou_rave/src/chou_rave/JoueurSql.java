@@ -34,13 +34,13 @@ public class JoueurSql {
         }
 
     }
- public boolean creerJoueur(Avatar a) {
-    String sql = "INSERT INTO Joueur (pseudo, score, positionX, positionY) VALUES (?, ?, ?, ?)";
+ public boolean creerJoueur(Avatar a, String animal) {
+    String sql = "INSERT INTO Avatar (animal, pseudo, position_x, position_y) VALUES (?, ?, ?, ?)";
     try (PreparedStatement requete = connexion.prepareStatement(sql)) {
-        requete.setString(1, a.getPseudo());
-        requete.setInt(2, a.getScore());
-        requete.setInt(3, a.getPositionX());   // ou a.getX() selon ton Avatar
-        requete.setInt(4, a.getPositionY());   // ou a.getY()
+        requete.setString(1, animal);
+        requete.setString(2, a.getPseudo());
+        requete.setInt(3, a.getPositionX());
+        requete.setInt(4, a.getPositionY());
         return requete.executeUpdate() > 0;
     } catch (SQLException ex) {
         ex.printStackTrace();

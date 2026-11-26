@@ -89,19 +89,7 @@ public class SelectionPersonnage extends JFrame implements ActionListener {
         final int hauteurPanneau = 220;
         
        
-        Avatar avatar = new Avatar();
-        avatar.setPseudo(txtPseudo);   
-        avatar.setX(0);
-        avatar.setY(0);
-
-    if (joueurSql.creerJoueur(avatar)) {
-        SalleAttente attente = new SalleAttente(pseudo, perso);
-        attente.setVisible(true);
-        this.dispose();
-    } else {
-        JOptionPane.showMessageDialog(this, "Impossible d'enregistrer le joueur.",
-            "Erreur", JOptionPane.ERROR_MESSAGE);
-    }
+       
 
         for (int i = 0; i < 5; i++) {
             JPanel carte = new JPanel(new BorderLayout());
@@ -200,20 +188,30 @@ public class SelectionPersonnage extends JFrame implements ActionListener {
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == btnValider) {
-            String pseudo = txtPseudo.getText().trim();
+public void actionPerformed(ActionEvent e) {
+    if (e.getSource() == btnValider) {
+        String pseudo = txtPseudo.getText().trim();
 
-            if (pseudo.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Saisis un pseudo !", "Erreur", JOptionPane.WARNING_MESSAGE);
-                return;
-            }
+        if (pseudo.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Saisis un pseudo !", "Erreur", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
 
-            String perso = getPersonnageSelectionne();
+        String perso = getPersonnageSelectionne();
 
+        Avatar avatar = new Avatar();
+        avatar.setPseudo(pseudo);
+        avatar.setX(0);
+        avatar.setY(0);
+
+       if (joueurSql.creerJoueur(avatar, perso)) {
             SalleAttente attente = new SalleAttente(pseudo, perso);
             attente.setVisible(true);
             this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(this, "Impossible d'enregistrer le joueur.",
+                "Erreur", JOptionPane.ERROR_MESSAGE);
         }
     }
+}
 }
