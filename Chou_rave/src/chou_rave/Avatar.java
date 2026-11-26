@@ -10,13 +10,22 @@ package chou_rave;
  */
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.util.ArrayList; 
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO; 
 
 public class Avatar {
     protected double x, y;
+    protected BufferedImage sprite;
     private boolean toucheGauche, toucheDroite, toucheHaut, toucheBas;
     private double vitesse = 5.0;
     private Avatar monAvatar;
+    private double largeur = 32.0;
+    private double hauteur = 32.0;
 
     // Nouvelles caractéristiques pour la survie
     private double enduranceMax = 1000.0;
@@ -25,6 +34,11 @@ public class Avatar {
     // Inventaire
     private int capaciteSac = 3;
     private ArrayList<String> inventaire;
+    
+    private int viesMax = 3;
+    private int vies = 3;
+    private int compteurInvincibilite = 0; 
+    private boolean estVivant;
     
 
     public Avatar() {
@@ -40,10 +54,33 @@ public class Avatar {
         
         this.inventaire = new ArrayList<>();
         
+        try {
+            // Adapte le chemin selon l'emplacement exact de ton image
+            URL urlImage = getClass().getResource("/resources/Lapin.png");
+            if (urlImage != null) {
+                this.sprite = ImageIO.read(urlImage);
+            } else {
+                System.out.println("Erreur : Image introuvable au chemin spécifié.");
+                this.sprite = null;
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(Avatar.class.getName()).log(Level.SEVERE, null, ex);
+            this.sprite = null;
+        }
+        
     }
 
     public void miseAJour() {
         // Détermine si le joueur donne l'ordre de bouger
+        if (!estVivant()) {
+            return;
+        }
+
+        // Décrémente la période d'invincibilité après un coup
+        if (compteurInvincibilite > 0) {
+            compteurInvincibilite--;
+        }
+        
         boolean veutBouger = toucheGauche || toucheDroite || toucheHaut || toucheBas;
 
         // Condition de mouvement : vouloir bouger ET avoir de l'endurance
@@ -78,6 +115,16 @@ public class Avatar {
         contexte.setColor(Color.BLUE);
         contexte.fillOval((int)x, (int)y, 30, 30); 
         
+        boolean afficherSprite = (compteurInvincibilite == 0) || (compteurInvincibilite % 6 < 3);
+        if (afficherSprite) {
+            if (this.sprite != null) {
+                contexte.drawImage(this.sprite, (int) x, (int) y, (int) largeur, (int) hauteur, null);
+            } else {
+                contexte.setColor(Color.MAGENTA);
+                contexte.fillRect((int) x, (int) y, (int) largeur, (int) hauteur);
+            }
+        }
+        
         // 2. Affichage de la jauge d'endurance au-dessus de l'avatar
         // Fond rouge de la barre
         contexte.setColor(Color.RED);
@@ -100,6 +147,26 @@ public class Avatar {
                 contexte.drawRect(10 + (i*30), 30, 25, 25);
             }
         }
+        
+        contexte.setColor(Color.BLACK);
+        contexte.drawString("Vies : " + vies + " / " + viesMax, 10, 75);
+        for (int i = 0; i < viesMax; i++) {
+            if (i < vies) {
+                contexte.setColor(Color.RED); // Vie pleine
+                contexte.fillOval(10 + (i * 25), 82, 18, 18);
+            } else {
+                contexte.setColor(Color.GRAY); // Vie perdue
+                contexte.drawOval(10 + (i * 25), 82, 18, 18);
+            }
+        }
+
+        // 5. Écran simple de Game Over
+        if (!estVivant()) {
+            contexte.setColor(new Color(0, 0, 0, 160));
+            contexte.fillRect(0, 0, 1024, 1024);
+            contexte.setColor(Color.RED);
+            contexte.drawString("GAME OVER - Vous avez été attrapé !", 400, 500);
+        }
     }
     
     public boolean ramasserNourriture(String aliment) {
@@ -112,6 +179,10 @@ public class Avatar {
 
     public void deposerNourritureTerrier() {
         this.inventaire.clear(); // Vide le sac
+    }
+    
+     public void perdreNourriture() {
+        this.inventaire.clear(); // Vide tout le sac si le fermier repère l'avatar
     }
 
     // --- Contrôles clavier ---
@@ -138,6 +209,23 @@ public class Avatar {
         this.x = x;
         this.y = y;
     }
+    
+    public void perdreVie() {
+        if (compteurInvincibilite == 0 && vies > 0) {
+            this.vies--;
+            this.compteurInvincibilite = 50; // 2 secondes d'invincibilité
+            System.out.println("Touché ! Vies restantes : " + this.vies);
+        }
+    }
+
+    public boolean estVivant() {
+        return this.vies > 0;
+    }
+
+    public int getVies() {
+        return this.vies;
+    }
+
 
     String getPseudo() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
