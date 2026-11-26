@@ -45,7 +45,7 @@ public class Avatar {
     
 
     public Avatar() {
-        this("/Images/Lapin.png");
+        this("/resources/Lapin.png");
     }
 
     // Constructeur utilisé par les 5 animaux
